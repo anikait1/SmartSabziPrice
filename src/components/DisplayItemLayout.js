@@ -19,7 +19,7 @@ const items = [
   },
 ];
 
-const DisplayItemGrid = () => {
+const DisplayItemLayout = () => {
   return (
     <div className="row row-cols-2 row-cols-sm-4 row-cols-lg-6">
       {items.map((item) => (
@@ -31,4 +31,4 @@ const DisplayItemGrid = () => {
   );
 };
 
-export default DisplayItemGrid;
+export default DisplayItemLayout;
