@@ -22,9 +22,9 @@ const items = [
 const DisplayItemLayout = () => {
   return (
     <div className="row row-cols-2 row-cols-sm-4 row-cols-lg-6">
-      {items.map((item) => (
+      {items.map((item, key) => (
         <div className="col mb-4">
-          <DisplayItem name={item.name} imgSrc={item.img} price={item.price} />
+          <DisplayItem name={item.name} imgSrc={item.img} price={item.price} key={key} />
         </div>
       ))}
     </div>
