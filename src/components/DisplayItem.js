@@ -12,7 +12,7 @@ const DisplayItem = ({ name, price, imgSrc }) => {
       <div className="card-body text-center p-2">
         <h6 className="card-title font-weight-bold my-1">{name}</h6>
         <div className="card-text text-black-50 small">
-          AVG - ${price} per dozen
+          AVG - ${price}
         </div>
       </div>
     </div>
