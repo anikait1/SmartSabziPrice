@@ -3,3 +3,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Custom CSS */
+.top-rounded-border {
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+}
+
+.bottom-rounded-border {
+  border-bottom-left-radius: 1.25rem;
+  border-bottom-right-radius: 1.25rem;
+}
+
