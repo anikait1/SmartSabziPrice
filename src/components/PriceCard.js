@@ -1,45 +1,76 @@
 import React from "react";
 
-const PriceCard = ({userImage, userName, date, location, time}) => {
+const SplitRow = ({ iconOne, iconOneText, iconTwo, iconTwoText }) => {
   return (
-    <div className="card shadow rounded rounded-lg border-0">
+    <div className="row no-gutters align-items-center">
+      <div className="col-5">
+        <i className={`fas fa-${iconOne} mx-3`}></i>
+        <span className="small font-weight-bold">{iconOneText}</span>
+      </div>
+      <div className="col-7 my-1">
+        <i className={`fas fa-${iconTwo} mx-3`}></i>
+        <span className="small font-weight-bold">{iconTwoText}</span>
+      </div>
+    </div>
+  );
+};
+
+const InfoColumn = ({ icon, iconText, bottomText, color }) => {
+  return (
+    <div className="col-2 text-center">
+      <i className={`fas fa-${icon} fa-xs text-${color}`}></i>
+      <h6 className={`my-1 font-weight-bold text-${color}`}>{iconText}</h6>
+      <span className="small font-weight-bold">{bottomText}</span>
+    </div>
+  );
+};
+
+const PriceCard = ({ userImage, userName, date, location, time }) => {
+  return (
+    <div className="card shadow-sm rounded rounded-lg border-0">
       <div className="row no-gutters align-items-center">
-        <div className="col-12 py-2 bg-light">
-          <div className="row no-gutters">
-            <div className="col-6">
-              <i class="far fa-user mx-2"></i>
-              <span>{userName}</span>
-            </div>
-            <div className="col-6 text-right">
-              <i class="far fa-calendar-minus"></i>
-              <span className="mx-2">{date}</span>
-            </div>
-          </div>
-        </div>
+        
         <div className="col-4">
-          <img src={userImage} alt="User" width="100" height="100" />
+          <img src={userImage} alt="User" className="img-fluid" />
         </div>
-        <div className="col-5">
-          <h6 className="my-0">Price &#8212; &#8377; 50</h6>
-          <h6 className="my-1">Quantity &#8212; 3kg</h6>
-          <h6 className="my-0">Rating &#8212; 3.5</h6>
-        </div>
-        <div className="col-3 text-center">
+        <InfoColumn
+          icon="money-bill-alt"
+          iconText="12"
+          bottomText="$"
+          color="success"
+        />
+        <InfoColumn
+          icon="shopping-bag"
+          iconText="2"
+          bottomText="Dozen"
+          color="primary"
+        />
+        <InfoColumn
+          icon="star"
+          iconText="3.5"
+          bottomText="Stars"
+          color="warning"
+        />
+        <div className="col-2 text-center">
           <i className="fas fa-chevron-up fa-lg d-block text-success"></i>
           <p className="my-0 font-weight-bold text-success my-2">+12</p>
           <i className="fas fa-chevron-down fa-lg d-block text-danger"></i>
         </div>
+
         <div className="col-12 bg-light py-2">
-          <div className="row no-gutters justify-content-between">
-            <div className="col-7">
-              <i class="fas fa-map-marker-alt mx-2"></i>
-              <span>{location}</span>
-            </div>
-            <div className="col-5 text-right">
-              <i class="far fa-clock"></i>
-              <span className="mx-2">{time}</span>
-            </div>
-          </div>
+          <SplitRow
+            iconOne="user"
+            iconOneText={userName}
+            iconTwo="clock"
+            iconTwoText={time}
+          />
+
+          <SplitRow
+            iconOne="calendar-minus"
+            iconOneText={date}
+            iconTwo="map-marker-alt"
+            iconTwoText={location}
+          />
         </div>
       </div>
     </div>
