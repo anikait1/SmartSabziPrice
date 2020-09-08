@@ -4,11 +4,11 @@ const SplitRow = ({ iconOne, iconOneText, iconTwo, iconTwoText }) => {
   return (
     <div className="row no-gutters align-items-center">
       <div className="col-5">
-        <i className={`fas fa-${iconOne} mx-3`}></i>
+        <i className={`fas fa-${iconOne} mx-2`}></i>
         <span className="small font-weight-bold">{iconOneText}</span>
       </div>
       <div className="col-7 my-1">
-        <i className={`fas fa-${iconTwo} mx-3`}></i>
+        <i className={`fas fa-${iconTwo} mx-2`}></i>
         <span className="small font-weight-bold">{iconTwoText}</span>
       </div>
     </div>
@@ -59,17 +59,17 @@ const PriceCard = ({ userImage, userName, date, location, time }) => {
 
         <div className="col-12 bg-light py-2">
           <SplitRow
+            iconOne="calendar-minus"
+            iconOneText={date}
+            iconTwo="compass"
+            iconTwoText={location}
+          />
+
+          <SplitRow
             iconOne="user"
             iconOneText={userName}
             iconTwo="clock"
             iconTwoText={time}
-          />
-
-          <SplitRow
-            iconOne="calendar-minus"
-            iconOneText={date}
-            iconTwo="map-marker-alt"
-            iconTwoText={location}
           />
         </div>
       </div>
