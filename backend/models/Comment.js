@@ -8,7 +8,7 @@ var CommentSchema = new Schema({
     },
     rating: String,
     quantity: {
-      value : String,
+      value: String,
       required: true,
     },
     quantityType: [
@@ -25,11 +25,11 @@ var CommentSchema = new Schema({
   },
   votes: String,
   location: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      //refernce via model Location
-      ref: "Location",
-    },
+    lattitude: String,
+    longitude: String,
+    pincode: String,
+    city: String,
+    state: String,
   },
 
   author: {
