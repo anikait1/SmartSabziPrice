@@ -11,6 +11,14 @@ var CommentSchema = new Schema({
       value: String,
       required: true,
     },
+
+    /*
+    quantityType: {
+      type: String,
+      enum: ["Dozen", "Gram", "Kilogram"]
+    }
+    */
+
     quantityType: [
       {
         type: "dozen",
