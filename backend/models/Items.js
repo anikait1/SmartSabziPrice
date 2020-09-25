@@ -6,28 +6,22 @@ var ItemSchema = new Schema({
   image: String,
   description: String,
 
+  nutrition: {
+    carbohydrates: String,
+    protein: String,
+    fat: String,
+    sugar: String,
+    calories: String,
+  },
+
   category: [
     {
       id: 1,
       type: "fruits",
-      nutrition: {
-        carbohydrates: String,
-        protein: String,
-        fat: String,
-        sugar: String,
-        calories: String,
-      },
     },
     {
       id: 2,
       type: "vegetables",
-      nutrition: {
-        carbohydrates: String,
-        protein: String,
-        fat: String,
-        sugar: String,
-        calories: String,
-      },
     },
   ],
 
