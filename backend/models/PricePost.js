@@ -1,14 +1,21 @@
 import { Schema, model } from "mongoose";
 
-var CommentSchema = new Schema({
+const PricePostSchema = new Schema({
   itemBill: {
     price: {
-      type: String,
+      type: Number,
       required: true,
     },
-    rating: String,
+
+    rating: {
+      type: Number,
+      min: 0,
+      max: 5,
+      required: false,
+    },
+
     quantity: {
-      value: String,
+      value: Number,
       required: true,
     },
 
@@ -17,7 +24,13 @@ var CommentSchema = new Schema({
       enum: ["Dozen", "Gram", "Kilogram"],
     },
   },
-  votes: String,
+
+  votes: {
+    type: Number,
+    min: 0,
+  },
+
+  // need to elaborate this
   location: {
     lattitude: String,
     longitude: String,
@@ -36,4 +49,4 @@ var CommentSchema = new Schema({
   },
 });
 
-export default model("Comment", CommentSchema);
+export default model("PricePost", PricePostSchema);
