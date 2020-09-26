@@ -14,23 +14,10 @@ var ItemSchema = new Schema({
     calories: String,
   },
 
-  /*
   category: {
     type: String,
-    enum: ["Vegetable", "Fruit"]
-  }
-  */
-
-  category: [
-    {
-      id: 1,
-      type: "fruits",
-    },
-    {
-      id: 2,
-      type: "vegetables",
-    },
-  ],
+    enum: ["Vegetable", "Fruit"],
+  },
 
   comments: [
     {

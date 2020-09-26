@@ -12,24 +12,10 @@ var CommentSchema = new Schema({
       required: true,
     },
 
-    /*
     quantityType: {
       type: String,
-      enum: ["Dozen", "Gram", "Kilogram"]
-    }
-    */
-
-    quantityType: [
-      {
-        type: "dozen",
-      },
-      {
-        type: "gram",
-      },
-      {
-        type: "kilogram",
-      },
-    ],
+      enum: ["Dozen", "Gram", "Kilogram"],
+    },
   },
   votes: String,
   location: {
