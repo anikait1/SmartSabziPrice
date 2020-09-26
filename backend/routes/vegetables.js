@@ -4,13 +4,18 @@ const router = express.Router();
 
 // GET all vegetables
 router.get("/", (req, res) => {
-  res.send("GET ALL from vegetables route");
+  // using query parameterss
+  const name = req.query.name;
+  const age = req.query.age;
+
+  res.send(`GET ALL vegetables Q: ${name}, ${age}`);
 });
 
 // GET a single vegetable
-// find a way to limit id to numbers only
 router.get("/:id", (req, res) => {
-  res.send("GET A vegetable from vegetable route")
+  const vegetableId = req.params.id;
+
+  res.send(`GET A vegetable: ${vegetableId}`);
 });
 
 export default router;
