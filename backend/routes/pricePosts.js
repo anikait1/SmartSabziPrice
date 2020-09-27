@@ -5,8 +5,7 @@ const router = express.Router();
 
 // create a new PricePost Model
 router.post("/", (req, res) => {
-  
-    const itemBill = {
+  const itemBill = {
     price: req.body.price,
     rating: req.body.rating,
     quantity: req.body.quantity,
@@ -27,7 +26,8 @@ router.post("/", (req, res) => {
     author,
   });
 
-  newPost.save()
+  newPost
+    .save()
     .then(() => res.json("New Post Added"))
     .catch((err) => res.status(400).json("Error" + err));
 });
