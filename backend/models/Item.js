@@ -19,11 +19,26 @@ const ItemSchema = new Schema({
 
   // add detailed validation for this
   nutrition: {
-    carbohydrates: Number,
-    protein: Number,
-    fat: Number,
-    sugar: Number,
-    calories: Number,
+    carbohydrates: {
+      type : Number,
+      min : 0,
+    },
+    protein: {
+      type : Number,
+      min : 0,
+    },
+    fat: {
+      type : Number,
+      min : 0,
+    },
+    sugar: {
+      type : Number,
+      min : 0,
+    },
+    calories: {
+      type : Number,
+      min : 0,
+    },
   },
 
   category: {
