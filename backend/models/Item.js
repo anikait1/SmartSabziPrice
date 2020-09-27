@@ -32,11 +32,11 @@ const ItemSchema = new Schema({
     enum: ["Vegetable", "Fruit"],
   },
 
-  comments: [
+  priceposts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      // reference from model Comments
-      ref: "Comment",
+      // reference from model PricePost
+      ref: "PricePost",
     },
   ],
 });
