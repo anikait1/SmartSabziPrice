@@ -1,4 +1,5 @@
 import express from "express";
+import Item from "../models/Item";
 import PricePost from "../models/PricePost";
 
 const router = express.Router();
@@ -45,7 +46,16 @@ router.post("/", (req, res) => {
 router.patch("/:postId", (req, res) => {});
 
 // get all posts for a specific user
-router.get("/users/:userId", (req, res) => {});
+router.get("/users/:userId", (req, res) => {
+
+  try{
+    const postfound = Item.find({"priceposts" : { "author" : { id : req.params.userId}}});
+     
+    res.json(postfound);
+  }catch(err){
+    res.json({message : err});
+  }
+});
 
 export default router;
 
