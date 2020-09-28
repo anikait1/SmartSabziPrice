@@ -7,19 +7,16 @@ const PricePostSchema = new Schema(
         type: Number,
         required: true,
       },
-
       rating: {
         type: Number,
         min: 0,
         max: 5,
         required: false,
       },
-
       quantity: {
         value: Number,
         required: true,
       },
-
       quantityType: {
         type: String,
         enum: ["Dozen", "Gram", "Kilogram"],
@@ -28,13 +25,21 @@ const PricePostSchema = new Schema(
 
     votes: {
       type: Number,
-      min: 0,
+      default: 0,
     },
 
-    // need to elaborate this
     location: {
-      lattitude: String,
-      longitude: String,
+      position: {
+        type: {
+          type: String,
+          enum: ["Point"],
+          required: true,
+        },
+        coordinates: {
+          type: [Number], // [longitude, latitude]
+          required: true,
+        },
+      },
       pincode: String,
       city: String,
       state: String,
@@ -49,9 +54,7 @@ const PricePostSchema = new Schema(
       username: String,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 export default model("PricePost", PricePostSchema);
