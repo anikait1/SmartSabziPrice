@@ -7,7 +7,12 @@ const ItemSchema = new Schema({
     trim: true,
   },
 
-  imageUrl: {
+  displayImgUrl: {
+    type: String,
+    required: true,
+  },
+
+  mainImgUrl: {
     type: String,
     required: true,
   },
@@ -17,27 +22,26 @@ const ItemSchema = new Schema({
     required: false,
   },
 
-  // add detailed validation for this
   nutrition: {
     carbohydrates: {
-      type : Number,
-      min : 0,
+      type: Number,
+      min: 0,
     },
     protein: {
-      type : Number,
-      min : 0,
+      type: Number,
+      min: 0,
     },
     fat: {
-      type : Number,
-      min : 0,
+      type: Number,
+      min: 0,
     },
     sugar: {
-      type : Number,
-      min : 0,
+      type: Number,
+      min: 0,
     },
     calories: {
-      type : Number,
-      min : 0,
+      type: Number,
+      min: 0,
     },
   },
 
