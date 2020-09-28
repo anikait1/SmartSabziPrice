@@ -4,28 +4,6 @@ import PricePost from "../models/PricePost";
 const router = express.Router();
 
 // create a new PricePost Model
-<<<<<<< Updated upstream
-router.post("/", (req, res) => {
-  const itemBill = {
-    price: req.body.price,
-    rating: req.body.rating,
-    quantity: req.body.quantity,
-    quantityType: req.body.quantityType,
-  };
-  const votes = req.body.votes;
-  const location = req.body.location;
-
-  const author = {
-    id: req.user._id,
-    username: req.user.username,
-  };
-
-  const newPost = new PricePost({
-    itemBill,
-    votes,
-    location,
-    author,
-=======
 router.post("/vegetables/:id", (req, res) => {
   Item.findById(req.params.id, (err, itemfound) => {
     if (err) {
@@ -71,7 +49,6 @@ router.post("/vegetables/:id", (req, res) => {
         }
       });
     }
->>>>>>> Stashed changes
   });
 });
 
@@ -92,12 +69,6 @@ router.post("/fruits/:id", (req, res) => {
           };
           const votes = req.body.votes;
 
-<<<<<<< Updated upstream
-  newPost
-    .save()
-    .then(() => res.json("New Post Added"))
-    .catch((err) => res.status(400).json("Error" + err));
-=======
           //TO be modified acc. to current location
           const location = {
             lattitude: req.body.lattitude,
@@ -128,7 +99,6 @@ router.post("/fruits/:id", (req, res) => {
       });
     }
   });
->>>>>>> Stashed changes
 });
 
 // update vote count for a PricePost
