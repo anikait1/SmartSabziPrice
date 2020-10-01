@@ -1,6 +1,7 @@
 import express from "express";
 import Item from "../models/Item";
 import PricePost from "../models/PricePost";
+import User from "../models/User";
 
 const router = express.Router();
 
@@ -16,8 +17,6 @@ router.post("/", (req, res) => {
         } else {
           const itemBill = req.body.itemBill;
           const votes = req.body.votes;
-
-          // TO be modified acc. to current location
           const location = req.body.location;
           const author = {
             id: req.user._id,
@@ -33,7 +32,16 @@ router.post("/", (req, res) => {
 
           itemfound.priceposts.push(newpricepost);
 
-          newpricepost.save()
+          User.findById(req.user._id, (err, currentUser) => {
+            if (err) {
+              console.log(err);
+            } else {
+              currentUser.postsbyUser.push(newpricepost);
+            }
+          });
+
+          newpricepost
+            .save()
             .then(() => res.json("New Post Added"))
             .catch((err) => res.status(400).json("Error" + err));
         }
@@ -47,13 +55,12 @@ router.patch("/:postId", (req, res) => {});
 
 // get all posts for a specific user
 router.get("/users/:userId", (req, res) => {
+  try {
+    const postfound = User.findById(req.params.userId);
 
-  try{
-    const postfound = Item.find({"priceposts" : { "author" : { id : req.params.userId}}});
-     
     res.json(postfound);
-  }catch(err){
-    res.json({message : err});
+  } catch (err) {
+    res.json({ message: err });
   }
 });
 
