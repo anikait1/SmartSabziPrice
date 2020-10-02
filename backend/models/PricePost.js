@@ -8,9 +8,7 @@ const PricePostSchema = new mongoose.Schema(
       quantity: { value: Number, required: true },
       quantityType: { type: String, enum: ["Dozen", "Gram", "Kilogram"] },
     },
-
     votes: { type: Number, default: 0 },
-
     location: {
       position: {
         // mongoose GeoJson
@@ -21,7 +19,6 @@ const PricePostSchema = new mongoose.Schema(
       city: { type: String, required: true },
       state: { type: String, required: true },
     },
-
     author: {
       id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       username: String,
