@@ -50,6 +50,14 @@ router.post("/", (req, res) => {
   });
 });
 
+router.post("/", (req, res) => {
+  const pricePost = new PricePost({ ...req.body.pricePost });
+
+  Item.findById(req.params.id)
+    .then((data) => data.priceposts.push())
+    .catch((err) => res.json({ message: err }));
+});
+
 // update vote count for a PricePost
 router.patch("/:postId", (req, res) => {});
 

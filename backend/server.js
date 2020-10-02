@@ -3,8 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config.js";
 
-import fruitRoutes from "./routes/fruits.js";
-import vegetableRoutes from "./routes/vegetables.js";
+import itemRoutes from "./routes/items.js";
 
 // set up express
 const app = express();
@@ -28,8 +27,7 @@ connection.once("open", () => {
 });
 
 // routes
-app.use("/vegetables", vegetableRoutes);
-app.use("/fruits", fruitRoutes);
+app.use("/items", itemRoutes);
 
 // Giving Port No. 5000 for our local server to execute
 app.listen(port, () => {

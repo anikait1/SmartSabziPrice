@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-const PricePostSchema = new Schema(
+const PricePostSchema = new mongoose.Schema(
   {
     itemBill: {
       price: {
@@ -57,4 +57,4 @@ const PricePostSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("PricePost", PricePostSchema);
+export default mongoose.model("PricePost", PricePostSchema);
