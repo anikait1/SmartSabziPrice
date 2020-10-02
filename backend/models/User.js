@@ -1,29 +1,12 @@
 import { Schema, model, Mongoose } from "mongoose";
 
 const UserSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    trim: true,
-  },
+  // user info
+  username: { type: String, required: true, trim: true },
+  password: { type: String, required: true },
+  dateOfBirth: { type: Date, required: true },
 
-  password: {
-    type: String,
-    required: true,
-  },
-
-  age: {
-    type: String,
-    required: true,
-  },
-
-  postsbyUser : [
-    {
-      type : mongoose.Schema.Type.ObjectID,
-      ref : "PricePost"
-    },
-  ],
-
+  postsByUser: [{ type: mongoose.Schema.Type.Objec, ref: "PricePost" }],
 });
 
 export default model("User", UserSchema);
