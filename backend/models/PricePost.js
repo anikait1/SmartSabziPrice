@@ -23,11 +23,7 @@ const PricePostSchema = new mongoose.Schema(
     },
 
     author: {
-      id: {
-        type: mongoose.Schema.Types.ObjectId,
-        //refernce via model User
-        ref: "User",
-      },
+      id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       username: String,
     },
   },
