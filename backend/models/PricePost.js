@@ -19,10 +19,13 @@ const PricePostSchema = new mongoose.Schema(
       city: { type: String, required: true },
       state: { type: String, required: true },
     },
-    author: {
+
+    // discuss between the two
+    /* author: {
       id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       username: String,
-    },
+    } */
+    userName: { type: String, required: true },
   },
   { timestamps: true }
 );
