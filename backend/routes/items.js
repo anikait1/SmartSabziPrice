@@ -4,13 +4,6 @@ import Item from "../models/Item.js";
 const router = express.Router();
 
 router.post("/fruits", (req, res) => {
-  /* const item = new Item({ ...req.body.item });
-
-  item
-    .save()
-    .then((data) => res.json(data))
-    .catch((err) => res.json({ message: err })); */
-
   Item.create({ ...req.body.item }, (err, item) => {
     if (err) {
       res.status(400).json({ message: err });

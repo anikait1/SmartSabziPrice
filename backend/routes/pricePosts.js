@@ -29,12 +29,11 @@ router.patch("/:postId", (req, res) => {});
 router.get("/users/:userId", (req, res) => {
   User.findById(req.params.userId)
     .populate("postsByUser")
-    .exec((err,foundUser) => {
-
-      if(err){
+    .exec((err, foundUser) => {
+      if (err) {
         console.log(err);
         res.json({ message: err });
-      }else{
+      } else {
         PricePost.aggregate([
           {
             $group: {
