@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   dateOfBirth: { type: Date, required: true },
 
-  postsByUser: [{ type: mongoose.Schema.Type.Objec, ref: "PricePost" }],
+  postsByUser: [{ type: mongoose.Schema.Type.ObjectId, ref: "PricePost" }],
 });
 
 export default mongoose.model("User", UserSchema);
