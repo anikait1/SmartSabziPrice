@@ -20,7 +20,7 @@ const ItemSchema = new mongoose.Schema({
   },
 
   // all item related price posts(stores reference)
-  priceposts: [{ type: mongoose.Schema.Types.ObjectId, ref: "PricePost" }],
+  pricePosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "PricePost" }],
 });
 
 export default mongoose.model("Item", ItemSchema);
