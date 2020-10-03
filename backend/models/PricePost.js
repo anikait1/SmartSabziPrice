@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
-const PricePostSchema = new mongoose.Schema(
-  {
+const PricePostSchema = new mongoose.Schema({
     itemBill: {
       price: { type: Number, required: true },
       rating: { type: Number, min: 0, max: 5, required: false },
@@ -19,13 +18,11 @@ const PricePostSchema = new mongoose.Schema(
       city: { type: String, required: true },
       state: { type: String, required: true },
     },
-
-    // discuss between the two
-    /* author: {
-      id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-      username: String,
-    } */
-    userName: { type: String, required: true },
+    
+    //Author details
+    author: {
+      id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+    } 
   },
   { timestamps: true }
 );

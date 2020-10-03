@@ -1,6 +1,6 @@
-import { Schema, model, Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
   // user info
   username: { type: String, required: true, trim: true },
   password: { type: String, required: true },
@@ -9,4 +9,4 @@ const UserSchema = new Schema({
   postsByUser: [{ type: mongoose.Schema.Type.Objec, ref: "PricePost" }],
 });
 
-export default model("User", UserSchema);
+export default mongoose.model("User", UserSchema);
