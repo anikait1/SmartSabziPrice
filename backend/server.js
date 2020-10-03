@@ -13,6 +13,7 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
+
 // database connection
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
@@ -30,6 +31,6 @@ connection.once("open", () => {
 app.use("/items", itemRoutes);
 
 // Giving Port No. 5000 for our local server to execute
-app.listen(port, () => {
+app.listen(5000, () => {
   console.log("Server Started on Port 5000");
 });
