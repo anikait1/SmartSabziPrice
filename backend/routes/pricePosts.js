@@ -6,7 +6,6 @@ import User from "../models/User";
 const router = express.Router();
 
 router.post("/", (req, res) => {
-  
   const pricePost = new PricePost({ ...req.body.pricePost });
 
   Item.findById(req.body.itemId)
@@ -14,26 +13,40 @@ router.post("/", (req, res) => {
     .catch((err) => res.json({ message: err }));
 
   User.findById(req.body.userId)
-    .then((user) => user.postsbyUser.push(pricePost))
+    .then((user) => user.postsByUser.push(pricePost))
     .catch((err) => res.json({ message: err }));
 
   pricePost
     .save()
     .then(() => res.json({ message: "new post added" }))
     .catch((err) => res.json({ message: err }));
+});
 
 // update vote count for a PricePost
 router.patch("/:postId", (req, res) => {});
 
 // get all posts for a specific user
 router.get("/users/:userId", (req, res) => {
-  try {
-    const postfound = User.findById(req.params.userId);
+  User.findById(req.params.userId)
+    .populate("postsByUser")
+    .exec((err,foundUser) => {
 
-    res.json(postfound);
-  } catch (err) {
-    res.json({ message: err });
-  }
+      if(err){
+        console.log(err);
+        res.json({ message: err });
+      }else{
+        PricePost.aggregate([
+          {
+            $group: {
+              _id: "$item",
+              itemPosts: { $push: "$foundUser.postsByUser" },
+            },
+          },
+        ]);
+      }
+      //Send Posts
+      res.json();
+    });
 });
 
 export default router;
