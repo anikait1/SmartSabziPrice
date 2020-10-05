@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import "dotenv/config.js";
 
 import itemRoutes from "./routes/items.js";
+import userRoutes from "./routes/users.js";
+import pricePostRoutes from "./routes/pricePosts.js";
 
 // set up express
 const app = express();
@@ -12,7 +14,6 @@ const port = process.env.PORT;
 // setup the middleware
 app.use(cors());
 app.use(express.json());
-
 
 // database connection
 const uri = process.env.ATLAS_URI;
@@ -29,8 +30,10 @@ connection.once("open", () => {
 
 // routes
 app.use("/items", itemRoutes);
+app.use("/pricePosts", pricePostRoutes);
+app.use("/users", userRoutes);
 
 // Giving Port No. 5000 for our local server to execute
-app.listen(5000, () => {
-  console.log("Server Started on Port 5000");
+app.listen(port, () => {
+  console.log(`Server Started on Port ${port}`);
 });
