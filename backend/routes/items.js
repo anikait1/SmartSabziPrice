@@ -3,14 +3,11 @@ import Item from "../models/Item.js";
 
 const router = express.Router();
 
-router.post("/fruits", (req, res) => {
-  Item.create({ ...req.body.item }, (err, item) => {
-    if (err) {
-      res.status(400).json({ message: err });
-    } else {
-      res.status(201).send("Created");
-    }
-  });
+// development only
+router.post("/", (req, res) => {
+  Item.create({ ...req.body.item })
+    .then(() => res.status(201).send("Created"))
+    .catch((err) => res.status(400).json({ message: err }));
 });
 
 router.get("/fruits", (req, res) => {
@@ -20,24 +17,12 @@ router.get("/fruits", (req, res) => {
       displayImgUrl: 1,
       "nutrition.calories": 1,
     })
-    .then((items) => res.json(items))
-    .catch((err) => res.json({ message: err }));
+    .then((items) => res.status(200).json(items))
+    .catch((err) => res.status(400).json({ message: err }));
 });
 
 router.get("/fruits/:id", (req, res) => {
   Item.findById(req.params.id)
-    .populate({
-      path: "pricePosts",
-      "location.position": {
-        $near: {
-          $maxDistance: 1000,
-          $geometry: {
-            type: "Point",
-            coordinate: [req.query.longitude, req.query.latitude],
-          },
-        },
-      },
-    })
     .then((item) => res.json(item))
     .catch((err) => res.json({ message: err }));
 });
