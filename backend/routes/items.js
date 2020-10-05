@@ -1,5 +1,6 @@
 import express from "express";
 import Item from "../models/Item.js";
+import { getDisplayItems, getItemById } from "../controllers/items.js";
 
 const router = express.Router();
 
@@ -10,25 +11,8 @@ router.post("/", (req, res) => {
     .catch((err) => res.status(400).json({ message: err }));
 });
 
-router.get("/fruits", (req, res) => {
-  Item.find({ category: "Fruit" })
-    .select({
-      name: 1,
-      displayImgUrl: 1,
-      "nutrition.calories": 1,
-    })
-    .then((items) => res.status(200).json(items))
-    .catch((err) => res.status(400).json({ message: err }));
-});
+router.get("/", getDisplayItems);
 
-router.get("/fruits/:id", (req, res) => {
-  Item.findById(req.params.id)
-    .then((item) => res.json(item))
-    .catch((err) => res.json({ message: err }));
-});
-
-router.get("/vegetables", (req, res) => {});
-
-router.get("/vegetables/:id", (req, res) => {});
+router.get("/:id", getItemById);
 
 export default router;
