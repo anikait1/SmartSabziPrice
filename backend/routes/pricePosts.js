@@ -1,25 +1,12 @@
 import express from "express";
-import Item from "../models/Item";
-import PricePost from "../models/PricePost";
-import User from "../models/User";
+import PricePost from "../models/PricePost.js";
 
 const router = express.Router();
 
 router.post("/", (req, res) => {
-  const pricePost = new PricePost({ ...req.body.pricePost });
-
-  Item.findById(req.body.itemId)
-    .then((item) => item.priceposts.push())
-    .catch((err) => res.json({ message: err }));
-
-  User.findById(req.body.userId)
-    .then((user) => user.postsByUser.push(pricePost))
-    .catch((err) => res.json({ message: err }));
-
-  pricePost
-    .save()
-    .then(() => res.json({ message: "new post added" }))
-    .catch((err) => res.json({ message: err }));
+  PricePost.create({ ...req.body.pricePost })
+    .then(() => res.status(200).send("Created"))
+    .catch((err) => res.status(400).json({ message: err }));
 });
 
 // update vote count for a PricePost
@@ -27,25 +14,36 @@ router.patch("/:postId", (req, res) => {});
 
 // get all posts for a specific user
 router.get("/users/:userId", (req, res) => {
-  User.findById(req.params.userId)
-    .populate("postsByUser")
-    .exec((err, foundUser) => {
-      if (err) {
-        console.log(err);
-        res.json({ message: err });
-      } else {
-        PricePost.aggregate([
-          {
-            $group: {
-              _id: "$item",
-              itemPosts: { $push: "$foundUser.postsByUser" },
-            },
-          },
-        ]);
-      }
-      //Send Posts
-      res.json();
-    });
+  PricePost.find({ userId: req.params.userId })
+    .then((posts) => res.status(200).json(posts))
+    .catch((err) => res.status(400).json({ message: err }));
+});
+
+// get all posts for a specific item
+router.get("/items/:itemId", (req, res) => {
+  const longitude = req.query.longitude;
+  const latitude = req.query.latitude;
+
+  PricePost.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: "Point",
+          coordianates: [longitude, latitude],
+        },
+        maxDistance: 1000,
+        distanceField: "location.position",
+      },
+    },
+  ])
+    .then((posts) => res.json(posts))
+    .catch((err) => res.json({ message: err }));
+});
+
+router.get("/", (req, res) => {
+  PricePost.find()
+    .then((data) => res.json(data))
+    .catch((err) => res.json(err));
 });
 
 export default router;
