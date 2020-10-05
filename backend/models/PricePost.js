@@ -9,20 +9,17 @@ const PricePostSchema = new mongoose.Schema(
       quantityType: { type: String, enum: ["Dozen", "Gram", "Kilogram"] },
     },
     votes: { type: Number, default: 0 },
-    // location: {
-    //   position: {
-    //     // mongoose GeoJson
-    //     type: { type: String, enum: ["Point"], required: true },
-    //     coordinates: { type: [Number], required: true }, // [longitude, latitude]
-    //   },
-    //   pincode: { type: String, required: false },
-    //   city: { type: String, required: true },
-    //   state: { type: String, required: true },
-    // },
     location: {
-      type: { type: String },
-      coordinates: []
-     },
+      position: {
+        // mongoose GeoJson
+        type: { type: String, enum: ["Point"], required: true },
+        coordinates: { type: [Number], required: true }, // [longitude, latitude]
+      },
+      pincode: { type: String, required: false },
+      city: { type: String, required: true },
+      state: { type: String, required: true },
+    },
+
     // user and item details
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     itemId: { type: mongoose.Schema.Types.ObjectId, ref: "Item" },
@@ -30,6 +27,6 @@ const PricePostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-PricePostSchema.index({ location: "2dsphere" });
+PricePostSchema.index({ "location.position": "2dsphere" });
 
 export default mongoose.model("PricePost", PricePostSchema);
