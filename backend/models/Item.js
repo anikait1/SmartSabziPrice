@@ -18,9 +18,6 @@ const ItemSchema = new mongoose.Schema({
     sugar: { type: Number, min: 0 },
     calories: { type: Number, min: 0 },
   },
-
-  // all item related price posts(stores reference)
-  pricePosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "PricePost" }],
 });
 
 export default mongoose.model("Item", ItemSchema);

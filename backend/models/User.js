@@ -5,8 +5,6 @@ const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, trim: true },
   password: { type: String, required: true },
   dateOfBirth: { type: Date, required: true },
-
-  postsByUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "PricePost" }],
 });
 
 export default mongoose.model("User", UserSchema);

@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 
-const PricePostSchema = new mongoose.Schema({
+const PricePostSchema = new mongoose.Schema(
+  {
     itemBill: {
       price: { type: Number, required: true },
       rating: { type: Number, min: 0, max: 5, required: false },
-      quantity: { value: Number, required: true },
+      quantity: { type: Number, required: true },
       quantityType: { type: String, enum: ["Dozen", "Gram", "Kilogram"] },
     },
     votes: { type: Number, default: 0 },
@@ -18,11 +19,10 @@ const PricePostSchema = new mongoose.Schema({
       city: { type: String, required: true },
       state: { type: String, required: true },
     },
-    
-    //Author details
-    author: {
-      id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
-    } 
+
+    // user and item details
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    itemId: { type: mongoose.Schema.Types.ObjectId, ref: "Item" },
   },
   { timestamps: true }
 );
