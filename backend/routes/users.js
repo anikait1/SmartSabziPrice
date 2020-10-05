@@ -9,4 +9,12 @@ router.post("/", (req, res) => {
     .catch((err) => res.status(400).json({ message: err }));
 });
 
+//for develpoment pupose only
+router.get("/", (req, res) => {
+  
+    User.find({})
+    .then((user) => res.json(user))
+    .catch((err) => res.json({message : err}));
+});
+
 export default router;
