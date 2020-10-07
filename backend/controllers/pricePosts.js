@@ -20,18 +20,18 @@ export const getUserPosts = (req, res) => {
   //   }else{
 
   //   }
-    
   // });
 
   PricePost.find({ userId: req.params.userId }).
   then(
 
       PricePost.aggregate([
-      {
+        
+        {
         "$group" : {
             
             // group by itemid or item
-            "_id" : '$item', 
+            "_id" : '$itemId', 
              postsByUser : {
                $push : "$$ROOT"
              }
