@@ -7,48 +7,30 @@ export const createPost = (req, res) => {
 };
 
 export const getUserPosts = (req, res) => {
-
-  // PricePost.find({ userId: req.params.userId })
-  //   .then((posts) => res.status(200).json(posts))
-  //   .catch((err) => res.status(400).json({ message: err }));
-
-  
-  // PricePost.find({ userId : req.params.userId},function(err, foundPost){
-  //   if(err){
-  //     res.json({message : err});
-  //     console.log(err);
-  //   }else{
-
-  //   }
-  // });
-
-  PricePost.find({ userId: req.params.userId }).
-  then(
-
-      PricePost.aggregate([
-        
+  PricePost.find({ userId: req.params.userId }).then(
+    PricePost.aggregate(
+      [
         {
-        "$group" : {
-            
+          $group: {
             // group by itemid or item
-            "_id" : '$itemId', 
-             postsByUser : {
-               $push : "$$ROOT"
-             }
-
-        }
-      }
-    ],function(err, result) {
-        if(err){
+            _id: "$itemId",
+            postsByUser: {
+              $push: "$$ROOT",
+            },
+          },
+        },
+      ],
+      function (err, result) {
+        if (err) {
           console.log(err);
-          res.json({message : err});
-        }else{
+          res.json({ message: err });
+        } else {
           console.log(result);
           res.json(result);
         }
-    })
-  )
-  
+      }
+    )
+  );
 };
 
 export const getItemPosts = (req, res) => {
