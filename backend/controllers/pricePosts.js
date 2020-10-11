@@ -40,7 +40,7 @@ export const getItemPosts = (req, res) => {
     itemId: req.params.itemId,
     "location.position": {
       $near: {
-        $maxDistance: 500,
+        $maxDistance: 10000,
         $geometry: {
           type: "Point",
           coordinates: [longitude, latitude],
