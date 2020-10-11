@@ -9,6 +9,7 @@ export default class InputForm extends Component {
     this.onChangeRating = this.onChangeRating.bind(this);
     this.onChangeQuantity = this.onChangeQuantity.bind(this);
     this.onChangeQuantityType = this.onChangeQuantityType.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       price: "",
