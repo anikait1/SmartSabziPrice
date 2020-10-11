@@ -60,7 +60,7 @@ export default class InputForm extends Component {
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit = {this.onSubmit}>
           <div className="form-row no-gutters">
             <div className="col-6">
               <div className="input-group">
