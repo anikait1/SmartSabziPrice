@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-export default function InputForm() {
-    return (
-        <div>
-            <form>
+export default class InputForm extends Component {
+    render() {
+        return (
+            <div>
+                    <form>
             <div className="form-row no-gutters">
               <div className="col-6">
                 <div className="input-group">
@@ -54,6 +55,7 @@ export default function InputForm() {
               </div>
             </div>
           </form>
-        </div>
-    )
+            </div>
+        )
+    }
 }
