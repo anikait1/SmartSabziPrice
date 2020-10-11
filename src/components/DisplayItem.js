@@ -1,7 +1,7 @@
 import React from "react";
 import "../index.css";
 
-const DisplayItem = ({ name, price, imgSrc }) => {
+const DisplayItem = ({ name, calorieCount, imgSrc }) => {
   return (
     <div className="card border-white shadow-sm bottom-rounded-border top-rounded-border">
       <img
@@ -12,7 +12,7 @@ const DisplayItem = ({ name, price, imgSrc }) => {
       <div className="card-body text-center p-2">
         <h6 className="card-title font-weight-bold my-1">{name}</h6>
         <div className="card-text text-black-50 small">
-          AVG - ${price}
+          Calories - {calorieCount}
         </div>
       </div>
     </div>
