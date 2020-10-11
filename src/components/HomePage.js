@@ -5,7 +5,7 @@ export default class HomePage extends Component {
   render() {
     return (
       <div className="container">
-        <DisplayItemLayout />
+        <DisplayItemLayout itemCategory="Fruit" />
       </div>
     );
   }
