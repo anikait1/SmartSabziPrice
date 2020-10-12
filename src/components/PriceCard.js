@@ -1,13 +1,14 @@
 import React from "react";
 
+// Helper Components
 const SplitRow = ({ iconOne, iconOneText, iconTwo, iconTwoText }) => {
   return (
     <div className="row no-gutters align-items-center">
-      <div className="col-5">
+      <div className="col-6">
         <i className={`fas fa-${iconOne} mx-2`}></i>
         <span className="small font-weight-bold">{iconOneText}</span>
       </div>
-      <div className="col-7 my-1">
+      <div className="col-6 my-1">
         <i className={`fas fa-${iconTwo} mx-2`}></i>
         <span className="small font-weight-bold">{iconTwoText}</span>
       </div>
@@ -20,34 +21,34 @@ const InfoColumn = ({ icon, iconText, bottomText, color }) => {
     <div className="col-2 text-center">
       <i className={`fas fa-${icon} fa-xs text-${color}`}></i>
       <h6 className={`my-1 font-weight-bold text-${color}`}>{iconText}</h6>
-      <span className="small font-weight-bold">{bottomText}</span>
+      <span className={`small font-weight-bold text-${color}`}>{bottomText}</span>
     </div>
   );
 };
 
-const PriceCard = ({ userImage, userName, date, location, time }) => {
+// Main Component
+const PriceCard = ({ user, itemBill, location, time }) => {
   return (
     <div className="card shadow-sm rounded rounded-lg border-0">
       <div className="row no-gutters align-items-center">
-        
         <div className="col-4">
-          <img src={userImage} alt="User" className="img-fluid" />
+          <img src={user.imgLink} alt="User" className="img-fluid" />
         </div>
         <InfoColumn
           icon="money-bill-alt"
-          iconText="12"
+          iconText={itemBill.price}
           bottomText="$"
           color="success"
         />
         <InfoColumn
           icon="shopping-bag"
-          iconText="2"
-          bottomText="Dozen"
+          iconText={itemBill.quantity}
+          bottomText={itemBill.quantityType}
           color="primary"
         />
         <InfoColumn
           icon="star"
-          iconText="3.5"
+          iconText={itemBill.rating}
           bottomText="Stars"
           color="warning"
         />
@@ -60,16 +61,16 @@ const PriceCard = ({ userImage, userName, date, location, time }) => {
         <div className="col-12 bg-light py-2">
           <SplitRow
             iconOne="calendar-minus"
-            iconOneText={date}
+            iconOneText={time.split("T")[0]}
             iconTwo="compass"
-            iconTwoText={location}
+            iconTwoText={`${location.pincode}, ${location.city}`}
           />
 
           <SplitRow
             iconOne="user"
-            iconOneText={userName}
+            iconOneText={user.username}
             iconTwo="clock"
-            iconTwoText={time}
+            iconTwoText={time.split("T")[1]}
           />
         </div>
       </div>
