@@ -1,4 +1,5 @@
 import express from "express";
+import PricePost from "../models/PricePost.js";
 import {
   createPost,
   getUserPosts,
