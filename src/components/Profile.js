@@ -13,7 +13,7 @@ export default class Profile extends Component {
                 <div className="row">
                   <div className="col">
                     <center>
-                      <img width="100px" src={dummyUser} />
+                      <img width="100px" src={dummyUser} alt="User"/>
                     </center>
                   </div>
                 </div>
@@ -215,7 +215,7 @@ export default class Profile extends Component {
                 </div>
               </div>
             </div>
-            <a href="#"> Back to Home</a>
+            <a href="/"> Back to Home</a>
             <br />
           </div>
           {/* <div class="col-md-7">
