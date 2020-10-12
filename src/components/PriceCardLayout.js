@@ -1,47 +1,88 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import PriceCard from "./PriceCard";
-
-const items = [
-  {
-    userImage: "https://www.w3schools.com/w3images/avatar2.png",
-    userName: "Anikait",
-    date: "13/09/20",
-    location: "Sector 37, Chandigarh",
-    time: "3:00PM",
-  },
-  {
-    userImage: "https://www.w3schools.com/w3images/avatar2.png",
-    userName: "CU Anikait",
-    date: "13/09/20",
-    location: "Sector 13, Chandigarh",
-    time: "8:30PM",
-  },
-  {
-    userImage: "https://www.w3schools.com/w3images/avatar2.png",
-    userName: "Not Anikait",
-    date: "11/09/20",
-    location: "Sector 11, Chandigarh",
-    time: "6:30AM",
-  },
-];
+import usePosition from "./usePosition";
 
 const PriceCardLayout = () => {
-  return (
-    <div className="row row-cols-1 row-cols-lg-2">
-      {items.map((item, key) => (
-        <div className="col mb-4">
-          <PriceCard
-            userName={item.userName}
-            userImage={item.userImage}
-            date={item.date}
-            location={item.location}
-            time={item.time}
-            key={key}
-          />
-        </div>
-      ))}
-    </div>
-  );
+  // const { latitude, longitude, locationError } = usePosition();
+  const [location, setLocation] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported");
+      setIsLoaded(true);
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation([position.coords.latitude, position.coords.longitude]);
+        },
+        () => {
+          setError("Unable to retrieve location");
+          setIsLoaded(true);
+        }
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    if (location.length !== 0) {
+      console.log("Something");
+      fetch(
+        `http://localhost:5000/pricePosts/items/5f7b017009286604eee346a5?latitude=${location[0]}&longitude=${location[1]}`
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          setPosts(result);
+          setIsLoaded(true);
+        });
+    }
+  }, [location]);
+
+  /*
+  useEffect(() => {
+    if (latitude && longitude && !locationError) {
+      fetch(
+        `http://localhost:5000/pricePosts/items/5f7b017009286604eee346a5?latitude=${latitude}&longitude=${longitude}`
+      )
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setPosts(result);
+            setIsLoaded(true);
+          },
+          (error) => {
+            setIsLoaded(true);
+            setError(true);
+          }
+        );
+    }
+  }, [latitude, longitude, locationError]);
+  console.log(locationError);
+*/
+  if (error) {
+    return <div className="text-danger">Error: {error}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div className="row row-cols-1 row-cols-lg-2">
+        {posts.map((post, key) => (
+          <div className="col mb-4" key={post._id}>
+            <PriceCard
+              user={post.userId}
+              itemBill={post.itemBill}
+              location={post.location}
+              time={post.createdAt}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
 };
 
 export default PriceCardLayout;
