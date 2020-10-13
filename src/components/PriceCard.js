@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 // Helper Components
 const SplitRow = ({ iconOne, iconOneText, iconTwo, iconTwoText }) => {
@@ -28,6 +29,7 @@ const InfoColumn = ({ icon, iconText, bottomText, color }) => {
 
 // Main Component
 const PriceCard = ({ user, itemBill, location, time }) => {
+  const [voteCount, setVoteCount] = useState(0);
   return (
     <div className="card shadow-sm rounded rounded-lg border-0">
       <div className="row no-gutters align-items-center">
@@ -53,9 +55,9 @@ const PriceCard = ({ user, itemBill, location, time }) => {
           color="warning"
         />
         <div className="col-2 text-center">
-          <i className="fas fa-chevron-up fa-lg d-block text-success"></i>
-          <p className="my-0 font-weight-bold text-success my-2">+12</p>
-          <i className="fas fa-chevron-down fa-lg d-block text-danger"></i>
+          <i className="fas fa-chevron-up fa-lg d-block text-success" onClick={() => setVoteCount(voteCount + 1)}></i>
+          <p className="my-0 font-weight-bold text-success my-2">{voteCount}</p>
+          <i className="fas fa-chevron-down fa-lg d-block text-danger" onClick={() => setVoteCount(voteCount - 1)}></i>
         </div>
 
         <div className="col-12 bg-light py-2">
