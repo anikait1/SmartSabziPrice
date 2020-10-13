@@ -16,7 +16,9 @@ export default class InputForm extends Component {
       rating: "",
       quantity: "",
       quantityType: "",
-      location: "",
+      coordinates: "",
+      city : "Chandigarh",
+      state : "Punjab",
       userId: "5f7b45788bbc5138dc7d9ab7",
       itemId: "5f7b017009286604eee346a5",
     };
@@ -53,7 +55,7 @@ export default class InputForm extends Component {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           this.setState({
-            location: [position.coords.latitude, position.coords.longitude],
+            coordinates: [position.coords.latitude, position.coords.longitude],
           });
         },
         () => {
@@ -69,7 +71,16 @@ export default class InputForm extends Component {
         quantity: this.state.quantity,
         quantityType: this.state.quantityType,
       },
-      location: this.state.location,
+      location: {
+
+        position : {
+          type : "Point",
+          coordinates : this.state.coordinates
+        },
+        city : this.state.city,
+        state : this.state.state 
+
+      },
       userId: this.state.userId,
       itemId: this.state.itemId,
     };
