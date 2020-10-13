@@ -3,7 +3,10 @@ import PricePost from "../models/PricePost.js";
 export const createPost = (req, res) => {
   PricePost.create({ ...req.body.pricePost })
     .then(() => res.status(201).send("Created"))
-    .catch((err) => res.status(400).json({ message: err }));
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({ message: err });
+    });
 };
 
 export const getUserPosts = (req, res) => {

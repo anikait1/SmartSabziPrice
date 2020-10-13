@@ -17,8 +17,8 @@ export default class InputForm extends Component {
       quantity: "",
       quantityType: "",
       coordinates: "",
-      city : "Chandigarh",
-      state : "Punjab",
+      city: "Chandigarh",
+      state: "Punjab",
       userId: "5f7b45788bbc5138dc7d9ab7",
       itemId: "5f7b017009286604eee346a5",
     };
@@ -66,20 +66,18 @@ export default class InputForm extends Component {
 
     const pricePost = {
       itemBill: {
-        price: this.state.price,
-        rating: this.state.rating,
-        quantity: this.state.quantity,
+        price: +this.state.price,
+        rating: +this.state.rating,
+        quantity: +this.state.quantity,
         quantityType: this.state.quantityType,
       },
       location: {
-
-        position : {
-          type : "Point",
-          coordinates : this.state.coordinates
+        position: {
+          type: "Point",
+          coordinates: this.state.coordinates,
         },
-        city : this.state.city,
-        state : this.state.state 
-
+        city: this.state.city,
+        state: this.state.state,
       },
       userId: this.state.userId,
       itemId: this.state.itemId,
@@ -148,9 +146,9 @@ export default class InputForm extends Component {
                 onChange={this.onChangeQuantityType}
               >
                 <option defaultValue>Units</option>
-                <option value="1">Kilogram</option>
-                <option value="2">Gram</option>
-                <option value="3">Dozen</option>
+                <option value="Kilogram">Kilogram</option>
+                <option value="Gram">Gram</option>
+                <option value="Dozen">Dozen</option>
               </select>
             </div>
             <div className="col-12 mb-3">
