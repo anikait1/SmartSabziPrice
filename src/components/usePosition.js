@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const usePosition = () => {
   const [position, setPosition] = useState({});
-  const [locationError, setError] = useState(null);
+  const [locationError, setLocationError] = useState(null);
 
   const onChange = (position) => {
     setPosition({
@@ -11,13 +11,14 @@ const usePosition = () => {
     });
   };
 
+  // more descriptive error messages to be added
   const onError = (error) => {
-    setError(error);
+    setLocationError(error);
   };
 
   useEffect(() => {
     if (!navigator || !navigator.geolocation) {
-      setError("Geolocation is not supported");
+      setLocationError("Geolocation is not supported");
       return;
     }
 
