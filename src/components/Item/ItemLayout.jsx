@@ -1,15 +1,14 @@
-import DisplayItem from "./DisplayItem";
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import ItemCard from "./ItemCard";
+import React, { useState, useEffect } from "react";
+import { getAllItems } from "../../api/ItemAPI";
 
-const DisplayItemLayout = ({ itemCategory }) => {
+const ItemLayout = ({ itemCategory }) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/items?category=${itemCategory}`)
+    getAllItems(itemCategory)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -32,9 +31,9 @@ const DisplayItemLayout = ({ itemCategory }) => {
       <div className="row row-cols-2 row-cols-sm-4 row-cols-lg-6">
         {items.map((item) => (
           <div className="col mb-4" key={item._id}>
-            <DisplayItem
+            <ItemCard
               name={item.name}
-              imgSrc={item.displayImgUrl}
+              imgLink={item.displayImgUrl}
               calorieCount={item.nutrition.calories}
             />
           </div>
@@ -44,4 +43,4 @@ const DisplayItemLayout = ({ itemCategory }) => {
   }
 };
 
-export default DisplayItemLayout;
+export default ItemLayout;

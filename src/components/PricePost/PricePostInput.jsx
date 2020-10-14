@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-export default class InputForm extends Component {
+export default class PricePostInput extends Component {
   constructor(props) {
     super();
 
@@ -185,7 +185,7 @@ export default class InputForm extends Component {
 // import axios from "axios";
 // import { useState } from "react";
 
-// const InputForm = (props) => {
+// const PricePostInput = (props) => {
 //   const [price, setPrice] = useState(null);
 //   const [rating, setRating] = useState(null);
 //   const [quantity, setQuantity] = useState(null);
@@ -325,4 +325,4 @@ export default class InputForm extends Component {
 //   );
 // };
 
-// export default InputForm;
+// export default PricePostInput;

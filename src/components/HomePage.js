@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import DisplayItemLayout from "./DisplayItemLayout";
+import ItemLayout from "../components/Item/ItemLayout";
 
 export default class HomePage extends Component {
   render() {
     return (
       <div className="container">
-        <DisplayItemLayout itemCategory="Fruit" />
+        <ItemLayout itemCategory="Fruit" />
       </div>
     );
   }

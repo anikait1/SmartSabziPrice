@@ -1,11 +1,11 @@
 import React from "react";
-import "../index.css";
+import "../../index.css";
 
-const DisplayItem = ({ name, calorieCount, imgSrc }) => {
+const ItemCard = ({ name, calorieCount, imgLink }) => {
   return (
     <div className="card border-white shadow-sm bottom-rounded-border top-rounded-border">
       <img
-        src={imgSrc}
+        src={imgLink}
         alt={name}
         className="card-img-top top-rounded-border"
       />
@@ -19,4 +19,4 @@ const DisplayItem = ({ name, calorieCount, imgSrc }) => {
   );
 };
 
-export default DisplayItem;
+export default ItemCard;

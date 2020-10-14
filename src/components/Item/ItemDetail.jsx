@@ -1,6 +1,6 @@
 import React from "react";
-import PriceCardLayout from "./PriceCardLayout";
-import InputForm from './InputForm';
+import PricePostLayout from "../PricePost/PricePostLayout";
+import PricePostInput from '../PricePost/PricePostInput';
 
 const Details = () => {
   const imgLink =
@@ -23,10 +23,10 @@ const Details = () => {
             exercitationem sapiente eligendi iure debitis hic alias aliquam
             voluptatibus voluptatum recusandae earum?
           </p>
-          <InputForm />
+          <PricePostInput />
         </div>
         <div className="col-12 col-lg-8">
-          <PriceCardLayout />
+          <PricePostLayout />
         </div>
       </div>
     </div>
