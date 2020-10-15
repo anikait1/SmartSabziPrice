@@ -32,6 +32,7 @@ const ItemLayout = ({ itemCategory }) => {
         {items.map((item) => (
           <div className="col mb-4" key={item._id}>
             <ItemCard
+              id={item._id}
               name={item.name}
               imgLink={item.displayImgUrl}
               calorieCount={item.nutrition.calories}
