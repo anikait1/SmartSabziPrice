@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../../index.css";
 
-const ItemCard = ({ name, calorieCount, imgLink }) => {
+const ItemCard = ({ id, name, calorieCount, imgLink }) => {
   return (
     <div className="card border-white shadow-sm bottom-rounded-border top-rounded-border">
       <img
@@ -15,6 +16,7 @@ const ItemCard = ({ name, calorieCount, imgLink }) => {
           Calories - {calorieCount}
         </div>
       </div>
+      <Link to={"/details/" + id}>View More</Link>
     </div>
   );
 };
