@@ -11,7 +11,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/details" component={Details} />
+        <Route path="/details/:id" component={Details} />
         <Route path="/profile" component={Profile} />
       </Switch>
     </React.Fragment>
