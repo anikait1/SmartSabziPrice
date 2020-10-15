@@ -28,5 +28,3 @@ function request(url, params, method = "GET") {
 }
 
 export default request;
-
-// reference tutorial: https://dev.to/eddieaich/create-an-awesome-js-api-interface-using-fetch-in-less-than-50-lines-3d65

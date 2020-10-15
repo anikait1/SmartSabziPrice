@@ -4,31 +4,14 @@
     "displayImgUrl": "http://dummyimage.com/176x177.bmp/cc0000/ffffff",
     "mainImgUrl": "http://dummyimage.com/197x127.jpg/5fa2dd/ffffff",
     "description": "In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
-    "category": true,
+    "category": "Fruit",
     "nutrition": {
       "carbohydrates": 3.771,
       "protein": 49.1,
       "fat": 35.06,
       "sugar": 4.1,
       "calories": 94
-    },
-    "pricePosts": [
-      {
-        "id": {
-          "$oid": "5f763897fc13ae6eb5000000"
-        }
-      },
-      {
-        "id": {
-          "$oid": "5f763897fc13ae6eb5000001"
-        }
-      },
-      {
-        "id": {
-          "$oid": "5f763897fc13ae6eb5000002"
-        }
-      }
-    ]
+    }
   },
   {
     "name": "Squeeze Bottle",
@@ -78,29 +61,7 @@
       "fat": 71.3608,
       "sugar": 28.5,
       "calories": 100
-    },
-    "pricePosts": [
-      {
-        "id": {
-          "$oid": "5f763897fc13ae6eb5000007"
-        }
-      },
-      {
-        "id": {
-          "$oid": "5f763897fc13ae6eb5000008"
-        }
-      },
-      {
-        "id": {
-          "$oid": "5f763897fc13ae6eb5000009"
-        }
-      },
-      {
-        "id": {
-          "$oid": "5f763897fc13ae6eb500000a"
-        }
-      }
-    ]
+    }
   },
   {
     "name": "Yogurt - Raspberry, 175 Gr",
@@ -531,19 +492,7 @@
       "fat": 37.3086,
       "sugar": 82.2,
       "calories": 2
-    },
-    "pricePosts": [
-      {
-        "id": {
-          "$oid": "5f763897fc13ae6eb5000038"
-        }
-      },
-      {
-        "id": {
-          "$oid": "5f763897fc13ae6eb5000039"
-        }
-      }
-    ]
+    }
   },
   {
     "name": "Ice Cream - Turtles Stick Bar",
