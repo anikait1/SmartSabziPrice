@@ -1,6 +1,6 @@
 import ItemCard from "./ItemCard";
 import React, { useState, useEffect } from "react";
-import { getAllItems } from "../../api/ItemAPI";
+import request from "../../api/Fetch";
 
 const ItemLayout = ({ itemCategory }) => {
   const [error, setError] = useState(null);
@@ -8,12 +8,12 @@ const ItemLayout = ({ itemCategory }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    getAllItems(itemCategory)
+    request("/items", { category: itemCategory })
       .then((res) => res.json())
       .then(
-        (result) => {
+        (items) => {
           setIsLoaded(true);
-          setItems(result);
+          setItems(items);
         },
         (error) => {
           setIsLoaded(true);
