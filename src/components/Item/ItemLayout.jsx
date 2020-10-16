@@ -16,7 +16,7 @@ const ItemLayout = ({ itemCategory }) => {
     const fetchItems = async () => {
       const _apiHost = "http://localhost:5000";
       const url = _apiHost + "/items?" + objectToQueryString({category: itemCategory});
-      console.log(url);
+      // console.log(url);
       
       const response = await fetch(url);
 
@@ -26,9 +26,8 @@ const ItemLayout = ({ itemCategory }) => {
         return;
       }
 
-      // const items = ;
-      setIsLoaded(true);
       setItems(await response.json());
+      setIsLoaded(true);
     };
 
     fetchItems();
