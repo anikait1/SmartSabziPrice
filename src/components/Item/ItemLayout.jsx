@@ -1,29 +1,41 @@
 import ItemCard from "./ItemCard";
 import React, { useState, useEffect } from "react";
-import request from "../../api/Fetch";
+
+const objectToQueryString = (obj) => {
+  return Object.keys(obj)
+    .map((key) => `${key}=${obj[key]}`)
+    .join("&");
+};
 
 const ItemLayout = ({ itemCategory }) => {
+  const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    request("/items", { category: itemCategory })
-      .then((res) => res.json())
-      .then(
-        (items) => {
-          setIsLoaded(true);
-          setItems(items);
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
+    const fetchItems = async () => {
+      const _apiHost = "http://localhost:5000";
+      const url = _apiHost + "/items?" + objectToQueryString({category: itemCategory});
+      console.log(url);
+      
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        setIsLoaded(true);
+        setError(response.status);
+        return;
+      }
+
+      // const items = ;
+      setIsLoaded(true);
+      setItems(await response.json());
+    };
+
+    fetchItems();
   }, [itemCategory]);
 
   if (error) {
-    return <div className="text-danger">Error: {error.message}</div>;
+    return <div className="text-danger">Error: {error}</div>;
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
