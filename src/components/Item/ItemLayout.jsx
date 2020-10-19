@@ -15,9 +15,9 @@ const ItemLayout = ({ itemCategory }) => {
   useEffect(() => {
     const fetchItems = async () => {
       const _apiHost = "http://localhost:5000";
-      const url = _apiHost + "/items?" + objectToQueryString({category: itemCategory});
-      // console.log(url);
-      
+      const url =
+        _apiHost + "/items?" + objectToQueryString({ category: itemCategory });
+
       const response = await fetch(url);
 
       if (!response.ok) {
