@@ -4,6 +4,12 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import "dotenv/config.js";
 
+//Load Routes
+import itemRouter from "./routes/items.js";
+import userRouter from "./routes/users.js";
+import pricePostRouter from "./routes/pricePosts.js";
+import authRouter from "./routes/auth.js";
+
 // set up express
 const app = express();
 app.use(express.json());
@@ -37,12 +43,6 @@ const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
-
-//Load Routes
-import itemRouter from "./routes/items.js";
-import userRouter from "./routes/users.js";
-import pricePostRouter from "./routes/pricePosts.js";
-import authRouter from "./routes/auth.js";
 
 // Use Routes
 app.use("/items", itemRouter);
