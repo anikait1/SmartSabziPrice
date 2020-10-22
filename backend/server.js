@@ -1,19 +1,29 @@
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import mongoose from "mongoose";
 import "dotenv/config.js";
 
-import itemRoutes from "./routes/items.js";
-import userRoutes from "./routes/users.js";
-import pricePostRoutes from "./routes/pricePosts.js";
-
 // set up express
 const app = express();
-const port = process.env.PORT;
-
-// setup the middleware
-app.use(cors());
 app.use(express.json());
+// setup the middleware
+
+if (process.env.NODE_ENV === "development") {
+  //cors allows us deal with React without any Problem
+  //Cross Origin resource sharing
+  app.use(
+    cors({
+      origin: process.env.CLIENT_URL,
+    })
+  );
+
+  app.use(morgan("dev"));
+
+  // Morgan is a HTTP request logger middleware.
+  // Give information about each request
+  // Simplifies the process of logging requests.
+}
 
 // database connection
 const uri = process.env.ATLAS_URI;
@@ -28,12 +38,21 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-// routes
-app.use("/items", itemRoutes);
-app.use("/pricePosts", pricePostRoutes);
-app.use("/users", userRoutes);
+//Load Routes
+import itemRouter from "./routes/items.js";
+import userRouter from "./routes/users.js";
+import pricePostRouter from "./routes/pricePosts.js";
+import authRouter from "./routes/auth.js";
 
-// Giving Port No. 5000 for our local server to execute
+// Use Routes
+app.use("/items", itemRouter);
+app.use("/pricePosts", pricePostRouter);
+app.use("/users", userRouter);
+app.use("/api/", authRouter);
+
+// Development Server Port 5000
+const port = process.env.PORT;
+
 app.listen(port, () => {
   console.log(`Server Started on Port ${port}`);
 });
