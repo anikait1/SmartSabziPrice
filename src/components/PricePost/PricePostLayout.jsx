@@ -49,7 +49,7 @@ const PriceCardLayout = ({ itemId }) => {
     return <div>Loading...</div>;
   } else {
     return (
-      <div className="row row-cols-1 row-cols-lg-2">
+      <div className="row row-cols-1 row-cols-lg-3">
         {pricePosts.map((post, key) => (
           <div className="col mb-4" key={post._id}>
             <PriceCard
