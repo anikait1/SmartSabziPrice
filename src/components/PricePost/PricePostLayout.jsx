@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import PriceCard from "./PricePostCard";
 import usePosition from "./usePosition";
+import Grid from '@material-ui/core/Grid';
 
 const objectToQueryString = (obj) => {
   return Object.keys(obj)
@@ -49,18 +50,18 @@ const PriceCardLayout = ({ itemId }) => {
     return <div>Loading...</div>;
   } else {
     return (
-      <div className="row row-cols-1 row-cols-lg-3">
+      <Grid container spacing={3}>
         {pricePosts.map((post, key) => (
-          <div className="col mb-4" key={post._id}>
+          <Grid item xs={12} sm={6} lg={4} key={key}>
             <PriceCard
               user={post.userId}
               itemBill={post.itemBill}
               location={post.location}
               time={post.createdAt}
             />
-          </div>
+          </Grid>
         ))}
-      </div>
+      </Grid>
     );
   }
 };
