@@ -4,6 +4,10 @@ import PricePostInput from "../PricePost/PricePostInput";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Grid } from "@material-ui/core";
+import { Container } from "@material-ui/core";
+import ItemInfo from "./ItemInfo";
+
 
 const Details = () => {
   const { id } = useParams();
@@ -38,24 +42,17 @@ const Details = () => {
     return <div>Loading...</div>;
   } else {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-12 col-lg-4">
-            <img
-              src={item.mainImgUrl}
-              alt="Apple"
-              className="img-fluid rounded shadow-sm"
-            />
-            <h2 className="mt-4 font-weight-bold">{item.name}</h2>
-            <h5 className="my-2">Price - $10 per KG</h5>
-            <p className="my-4 text-black-50">{item.description}</p>
+      <Container>
+        <Grid container spacing={3}>
+          <Grid item xs={12} lg={4} style={{maxWidth: 350}}>
+            <ItemInfo item={item} />
             <PricePostInput />
-          </div>
-          <div className="col-12 col-lg-8">
-            <PricePostLayout itemId={id}/>
-          </div>
-        </div>
-      </div>
+          </Grid>
+          <Grid item xs={12} lg={8}>
+            <PricePostLayout itemId={id} />
+          </Grid>
+        </Grid>
+      </Container>
     );
   }
 };
