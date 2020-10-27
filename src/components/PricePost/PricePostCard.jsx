@@ -12,13 +12,14 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
 import IconButton from "@material-ui/core/IconButton";
+import { ListItemAvatar } from "@material-ui/core";
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -26,6 +27,21 @@ const useStyles = makeStyles((theme) => ({
   },
   likes: {
     marginLeft: "auto",
+  },
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  },
+  avatarWidth: {
+    minWidth: theme.spacing(6)
+  },
+  orange: {
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
+  },
+  purple: {
+    color: theme.palette.getContrastText(deepPurple[500]),
+    backgroundColor: deepPurple[500],
   },
 }));
 
@@ -53,19 +69,23 @@ const MaterialPriceCard = ({ user, itemBill, location, time }) => {
       />
       <Divider variant="middle" />
       <CardContent style={{paddingTop: 8, paddingBottom: 8}}>
-        <List dense={true}>
+        <List>
           <ListItem disableGutters>
-            <ListItemIcon style={{ minWidth: 40 }}>
-              <ExploreOutlinedIcon fontSize="small" />
-            </ListItemIcon>
+            <ListItemAvatar className={classes.avatarWidth}>
+              <Avatar className={`${classes.small} ${classes.orange}`}>
+                <ExploreOutlinedIcon fontSize="small" />
+              </Avatar>
+            </ListItemAvatar>
             <ListItemText>
               {`${location.pincode}, ${location.city}`}
             </ListItemText>
           </ListItem>
           <ListItem disableGutters>
-            <ListItemIcon style={{ minWidth: 40 }}>
+            <ListItemAvatar className={classes.avatarWidth}>
+              <Avatar className={`${classes.small} ${classes.purple}`}>
               <LocalMallOutlinedIcon fontSize="small" />
-            </ListItemIcon>
+              </Avatar>
+            </ListItemAvatar>
             <ListItemText>
               {`${itemBill.quantity} ${itemBill.quantityType}`}
             </ListItemText>
