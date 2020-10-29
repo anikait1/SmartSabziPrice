@@ -18,6 +18,7 @@ import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
 import IconButton from "@material-ui/core/IconButton";
+import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
 import { ListItemAvatar } from "@material-ui/core";
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
@@ -51,13 +52,6 @@ const MaterialPriceCard = ({ user, itemBill, location, time }) => {
 
   return (
     <Card>
-      <CardMedia
-        className={classes.media}
-        component="img"
-        src="https://blog.pixlr.com/wp-content/uploads/2019/03/stars-pattern.png"
-        title="Paella dish"
-        height={100}
-      />
       <CardHeader
         avatar={
           <Avatar aria-label="price post" className={classes.avatar}>
@@ -69,33 +63,20 @@ const MaterialPriceCard = ({ user, itemBill, location, time }) => {
       />
       <Divider variant="middle" />
       <CardContent style={{paddingTop: 8, paddingBottom: 8}}>
-        <List>
-          <ListItem disableGutters>
-            <ListItemAvatar className={classes.avatarWidth}>
-              <Avatar className={`${classes.small} ${classes.orange}`}>
-                <ExploreOutlinedIcon fontSize="small" />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText>
-              {`${location.pincode}, ${location.city}`}
-            </ListItemText>
-          </ListItem>
-          <ListItem disableGutters>
-            <ListItemAvatar className={classes.avatarWidth}>
-              <Avatar className={`${classes.small} ${classes.purple}`}>
-              <LocalMallOutlinedIcon fontSize="small" />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText>
-              {`${itemBill.quantity} ${itemBill.quantityType}`}
-            </ListItemText>
-          </ListItem>
-        </List>
+        <div style={{display: "flex", alignItems: "center", marginBottom: 5}}>
+          <LocalOfferOutlinedIcon fontSize="small" style={{marginRight: 12, color: "green"}}/>
+          <Typography variant="subtitle1" component="h6" style={{fontWeight: "bold"}}>&#x20B9; {itemBill.price} / Kg</Typography>
+        </div>
+        <div style={{display: "flex", alignItems: "center"}}>
+          <LocalMallOutlinedIcon fontSize="small" style={{marginRight: 12, color: "blue"}}/>
+          <Typography variant="subtitle1" component="h6" style={{fontWeight: "bold"}}>{`${itemBill.quantity} ${itemBill.quantityType}`}</Typography>
+        </div>
       </CardContent>
       <Divider variant="middle" />
       <CardActions disableSpacing style={{ paddingLeft: 16, paddingRight: 16 }}>
-        <Typography variant="h5" component="h5">
-          &#8377; {itemBill.price}
+      <ExploreOutlinedIcon fontSize="small" style={{marginRight: 12}}/>
+        <Typography variant="subtitle2" component="h6">
+        {`${location.pincode}, ${location.city}`}
         </Typography>
         <IconButton
           aria-label="like the price"
@@ -106,7 +87,7 @@ const MaterialPriceCard = ({ user, itemBill, location, time }) => {
         >
           {clicked ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
         </IconButton>
-        <Typography variant="subtitile1" component="h6" color="textSecondary">
+        <Typography variant="subtitile2" component="h6" color="textSecondary">
           255
         </Typography>
       </CardActions>
