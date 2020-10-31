@@ -7,7 +7,13 @@ import { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { Container } from "@material-ui/core";
 import ItemInfo from "./ItemInfo";
-
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import EditLocationOutlinedIcon from "@material-ui/icons/EditLocationOutlined";
 
 const Details = () => {
   const { id } = useParams();
@@ -43,15 +49,28 @@ const Details = () => {
   } else {
     return (
       <Container>
-        <Grid container spacing={3}>
-          <Grid item xs={12} lg={4} style={{maxWidth: 350}}>
-            <ItemInfo item={item} />
-            <PricePostInput />
-          </Grid>
-          <Grid item xs={12} lg={8}>
-            <PricePostLayout itemId={id} />
-          </Grid>
-        </Grid>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="baseline"
+          marginBottom={4}
+        >
+          <Box display="flex" alignItems="center">
+            <Typography variant="h5" component="h1" style={{ marginRight: 8 }}>
+              Sector 24, Chandigarh
+            </Typography>
+            <EditLocationOutlinedIcon fontSize="large" />
+          </Box>
+          <ButtonGroup
+            variant="outlined"
+            color="primary"
+            aria-label="contained primary button group"
+          >
+            <Button startIcon={<CreateOutlinedIcon />}>New</Button>
+            <Button startIcon={<InfoOutlinedIcon />}>Info</Button>
+          </ButtonGroup>
+        </Box>
+        <PricePostLayout itemId={id} />
       </Container>
     );
   }
