@@ -52,7 +52,7 @@ const PriceCardLayout = ({ itemId }) => {
     return (
       <Grid container spacing={3}>
         {pricePosts.map((post, key) => (
-          <Grid item xs={12} sm={6} lg={4} key={key}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={key}>
             <PriceCard
               user={post.userId}
               itemBill={post.itemBill}
