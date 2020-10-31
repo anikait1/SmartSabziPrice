@@ -5,26 +5,21 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
-import { red } from "@material-ui/core/colors";
-import CardMedia from "@material-ui/core/CardMedia";
+import { blue } from "@material-ui/core/colors";
 import Divider from "@material-ui/core/Divider";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
 import IconButton from "@material-ui/core/IconButton";
-import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
-import { ListItemAvatar } from "@material-ui/core";
-import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import EventOutlinedIcon from "@material-ui/icons/EventOutlined";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: blue[400],
+    marginRight: theme.spacing(1)
   },
   likes: {
     marginLeft: "auto",
@@ -33,16 +28,16 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
   },
-  avatarWidth: {
-    minWidth: theme.spacing(6)
+  infoBox: {
+    display: "flex",
+    alignItems: "center",
+    "& > svg": {
+      marginRight: theme.spacing(1),
+    },
   },
-  orange: {
-    color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: deepOrange[500],
-  },
-  purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+  cardActionsPadding: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
 }));
 
@@ -52,31 +47,61 @@ const MaterialPriceCard = ({ user, itemBill, location, time }) => {
 
   return (
     <Card>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="price post" className={classes.avatar}>
-            {user.username[0].toUpperCase()}
-          </Avatar>
-        }
-        title={user.username}
-        subheader={time.split("T")[0]}
-      />
-      <Divider variant="middle" />
-      <CardContent style={{paddingTop: 8, paddingBottom: 8}}>
-        <div style={{display: "flex", alignItems: "center", marginBottom: 5}}>
-          <LocalOfferOutlinedIcon fontSize="small" style={{marginRight: 12, color: "green"}}/>
-          <Typography variant="subtitle1" component="h6" style={{fontWeight: "bold"}}>&#x20B9; {itemBill.price} / Kg</Typography>
-        </div>
-        <div style={{display: "flex", alignItems: "center"}}>
-          <LocalMallOutlinedIcon fontSize="small" style={{marginRight: 12, color: "blue"}}/>
-          <Typography variant="subtitle1" component="h6" style={{fontWeight: "bold"}}>{`${itemBill.quantity} ${itemBill.quantityType}`}</Typography>
-        </div>
+      <Box
+        display="flex"
+        alignItems="baseline"
+        justifyContent="center"
+        color="white"
+        bgcolor="#595b83"
+        boxShadow={1}
+        paddingTop={1}
+        paddingBottom={1}
+      >
+        <Typography
+          variant="h5"
+          component="h3"
+          align="center"
+          display="inline"
+          style={{ marginRight: 5 }}
+        >
+          &#x20B9; {itemBill.price}
+        </Typography>
+        <Typography
+          variant="subtitle2"
+          component="p"
+          align="center"
+          display="inline"
+        >
+          / Kg
+        </Typography>
+      </Box>
+      <CardContent>
+        <Box className={classes.infoBox}>
+          <LocalMallOutlinedIcon fontSize="small" />
+          <Typography variant="subtitle2" component="h6">
+            {`${itemBill.quantity} ${itemBill.quantityType}`}
+          </Typography>
+        </Box>
+        <Box className={classes.infoBox} marginTop={1} marginBottom={1}>
+          <ExploreOutlinedIcon fontSize="small" />
+          <Typography variant="subtitle2" component="h6">
+            {`${location.pincode}, ${location.city}`}
+          </Typography>
+        </Box>
+        <Box className={classes.infoBox}>
+          <EventOutlinedIcon fontSize="small" />
+          <Typography variant="subtitle2" component="h6">
+            {time.split("T")[0]}
+          </Typography>
+        </Box>
       </CardContent>
       <Divider variant="middle" />
-      <CardActions disableSpacing style={{ paddingLeft: 16, paddingRight: 16 }}>
-      <ExploreOutlinedIcon fontSize="small" style={{marginRight: 12}}/>
-        <Typography variant="subtitle2" component="h6">
-        {`${location.pincode}, ${location.city}`}
+      <CardActions disableSpacing className={classes.cardActionsPadding}>
+        <Avatar aria-label="price post" className={`${classes.small} ${classes.avatar}`}>
+          {user.username[0].toUpperCase()}
+        </Avatar>
+        <Typography variant="subtitle2" component="span">
+          {user.username}
         </Typography>
         <IconButton
           aria-label="like the price"
@@ -84,11 +109,17 @@ const MaterialPriceCard = ({ user, itemBill, location, time }) => {
           onClick={() => {
             clicked ? setClicked(false) : setClicked(true);
           }}
+          color="inherit"
+          size="small"
         >
-          {clicked ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
+          {clicked ? (
+            <FavoriteOutlinedIcon fontSize="small"/>
+          ) : (
+            <FavoriteBorderOutlinedIcon fontSize="small"/>
+          )}
         </IconButton>
-        <Typography variant="subtitile2" component="h6" color="textSecondary">
-          255
+        <Typography variant="subtitle2" component="h6">
+          15000
         </Typography>
       </CardActions>
     </Card>
