@@ -1,18 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "../../index.css";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from "@material-ui/core/Typography";
+import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
+import Button from '@material-ui/core/Button';
 
 const ItemCard = ({ id, name, calorieCount, imgLink }) => {
   return (
-    <div className="card shadow-sm">
-      <img src={imgLink} alt={name} className="card-img-top" />
-      <div className="card-body text-center p-2">
-        <h6 className="card-title font-weight-bold my-2">{name}</h6>
-        <Link to={"details/" + id} className="btn btn-info btn-sm btn-block">
-          Find Price
-        </Link>
-      </div>
-    </div>
+      <Card>
+        <CardMedia src={imgLink} title={name} component="img" />
+        <CardContent style={{paddingTop: 8, paddingBottom: 8}}>
+          <Typography variant="subtitle2" component="p" align="center">{name}</Typography>
+        </CardContent>
+        <CardActions>
+          <Button color="primary" variant="outlined" size="small" href={`details/${id}`} fullWidth={true} startIcon={<LocalOfferOutlinedIcon />}>Price</Button>
+        </CardActions>
+      </Card>
   );
 };
 
