@@ -17,4 +17,18 @@ router.get("/", (req, res) => {
     .catch((err) => res.json({message : err}));
 });
 
+//For development pupose Only
+router.delete("/:id",(req,res) => {
+
+  User.findByIdAndRemove(req.params.id,function(err){
+    if(err){
+      console.log(err);
+    }else{
+      res.json({message : "User deleted"});
+    }
+  })
+
+});
+
+
 export default router;
