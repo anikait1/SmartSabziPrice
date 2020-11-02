@@ -7,42 +7,42 @@ import expressJwt from "express-jwt";
 import _ from "lodash";
 
 //For enabling require keyword
-import { createRequire } from 'module';
+import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 import fetch from "node-fetch";
 
 //For server side data validation and sanitization
-const { validationResult } = require('express-validator');
+const { validationResult } = require("express-validator");
 
 //Securily transmitting info
 import jwt from "jsonwebtoken";
 
 //Sending Mails
-import sgMail from '@sendgrid/mail';
+import sgMail from "@sendgrid/mail";
 sgMail.setApiKey(process.env.MAIL_KEY);
 
 //Custom Error Handler
 import { errorHandler } from "../helpers/dbErrorHandling.js";
-
 export function registerController(req, res) {
   const { name, email, password } = req.body;
-  
+
   //Check for Error in data contained in body
   const errors = validationResult(req);
-
+  var flag = 0;
   if (!errors.isEmpty()) {
-    const firstError = errors.array().map(error => error.msg)[0];
+    const firstError = errors.array().map((error) => error.msg)[0];
     return res.status(422).json({
-      errors: firstError
+      errors: firstError,
     });
   } else {
     User.findOne({
-      email
+      email,
     }).exec((err, user) => {
       if (user) {
+        flag = 1;
         return res.status(400).json({
-          errors: 'Email is taken'
+          errors: "Email is taken",
         });
       }
     });
@@ -52,54 +52,57 @@ export function registerController(req, res) {
       {
         name,
         email,
-        password
+        password,
       },
       process.env.JWT_ACCOUNT_ACTIVATION,
       {
-        expiresIn: '10m'
+        expiresIn: "10m",
       }
     );
 
     //Email Data
-    const emailData = {
-      from: process.env.EMAIL_FROM,
-      to: email,
-      subject: 'Account activation link',
-      html: `
-                <h1>Please Click on the following Link to activate your account</h1>
-                <p>${process.env.CLIENT_URL}/users/activate/${token}</p>
-                <hr />
-                <p>This email may containe sensitive information</p>
-                <p>${process.env.CLIENT_URL}</p>
-            `
-    };
+    if (flag == 0) {
+      const emailData = {
+        from: process.env.EMAIL_FROM,
+        to: email,
+        subject: "Account activation link",
+        html: `
+                  <h1>Please Click on the following Link to activate your account</h1>
+                  <p>${process.env.CLIENT_URL}/users/activate/${token}</p>
+                  <hr />
+                  <p>This email may containe sensitive information</p>
+                  <p>${process.env.CLIENT_URL}</p>
+              `,
+      };
+    }
 
-    sgMail
-      .send(emailData)
-      .then(sent => {
-        return res.json({
-          message: `Email has been sent to ${email}`
+    if ((flag = 0)) {
+      sgMail
+        .send(emailData)
+        .then((sent) => {
+          return res.json({
+            message: `Email has been sent to ${email}`,
+          });
+        })
+        .catch((err) => {
+          return res.status(400).json({
+            success: false,
+            errors: errorHandler(err),
+          });
         });
-      })
-      .catch(err => {
-        return res.status(400).json({
-          success: false,
-          errors: errorHandler(err)
-        });
-      });
+    }
   }
-
 }
 
-export function activationController(req, res){
+export function activationController(req, res) {
   const { token } = req.body;
 
   if (token) {
     jwt.verify(token, process.env.JWT_ACCOUNT_ACTIVATION, (err, decoded) => {
       if (err) {
-        console.log('Activation error');
+        console.log("Activation error");
         return res.status(401).json({
-          errors: 'Expired link. Signup again'
+          errors: "Expired link. Signup again",
         });
       } else {
         const { name, email, password } = jwt.decode(token);
@@ -108,20 +111,20 @@ export function activationController(req, res){
         const user = new User({
           name,
           email,
-          password
+          password,
         });
 
         user.save((err, user) => {
           if (err) {
-            console.log('Save error', errorHandler(err));
+            console.log("Save error", errorHandler(err));
             return res.status(401).json({
-              errors: errorHandler(err)
+              errors: errorHandler(err),
             });
           } else {
             return res.json({
               success: true,
               message: user,
-              message: 'Signup success'
+              message: "Signup success",
             });
           }
         });
@@ -129,43 +132,43 @@ export function activationController(req, res){
     });
   } else {
     return res.json({
-      message: 'Error Please try again'
+      message: "Error Please try again",
     });
   }
-};
+}
 
-export function loginController(req, res){
+export function loginController(req, res) {
   const { email, password } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const firstError = errors.array().map(error => error.msg)[0];
+    const firstError = errors.array().map((error) => error.msg)[0];
     return res.status(422).json({
-      errors: firstError
+      errors: firstError,
     });
   } else {
     // check if user exist
     User.findOne({
-      email
+      email,
     }).exec((err, user) => {
       if (err || !user) {
         return res.status(400).json({
-          errors: 'User with that email does not exist. Please signup'
+          errors: "User with that email does not exist. Please signup",
         });
       }
       // authenticate
       if (!user.authenticate(password)) {
         return res.status(400).json({
-          errors: 'Email and password do not match'
+          errors: "Email and password do not match",
         });
       }
       // generate a token and send to client
       const token = jwt.sign(
         {
-          _id: user._id
+          _id: user._id,
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '30d'
+          expiresIn: "30d",
         }
       );
       const { _id, name, email, role } = user;
@@ -176,41 +179,41 @@ export function loginController(req, res){
           _id,
           name,
           email,
-          role
-        }
+          role,
+        },
       });
     });
   }
-};
+}
 
-export function forgotPasswordController(req, res){
+export function forgotPasswordController(req, res) {
   const { email } = req.body;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    const firstError = errors.array().map(error => error.msg)[0];
+    const firstError = errors.array().map((error) => error.msg)[0];
     return res.status(422).json({
-      errors: firstError
+      errors: firstError,
     });
   } else {
     User.findOne(
       {
-        email
+        email,
       },
       (err, user) => {
         if (err || !user) {
           return res.status(400).json({
-            error: 'User with that email does not exist'
+            error: "User with that email does not exist",
           });
         }
 
         const token = jwt.sign(
           {
-            _id: user._id
+            _id: user._id,
           },
           process.env.JWT_RESET_PASSWORD,
           {
-            expiresIn: '10m'
+            expiresIn: "10m",
           }
         );
 
@@ -224,33 +227,33 @@ export function forgotPasswordController(req, res){
                     <hr />
                     <p>This email may contain sensetive information</p>
                     <p>${process.env.CLIENT_URL}</p>
-                `
+                `,
         };
 
         return user.updateOne(
           {
-            resetPasswordLink: token
+            resetPasswordLink: token,
           },
           (err, success) => {
             if (err) {
-              console.log('RESET PASSWORD LINK ERROR', err);
+              console.log("RESET PASSWORD LINK ERROR", err);
               return res.status(400).json({
                 error:
-                  'Database connection error on user password forgot request'
+                  "Database connection error on user password forgot request",
               });
             } else {
               sgMail
                 .send(emailData)
-                .then(sent => {
+                .then((sent) => {
                   // console.log('SIGNUP EMAIL SENT', sent)
                   return res.json({
-                    message: `Email has been sent to ${email}. Follow the instruction to activate your account`
+                    message: `Email has been sent to ${email}. Follow the instruction to activate your account`,
                   });
                 })
-                .catch(err => {
+                .catch((err) => {
                   // console.log('SIGNUP EMAIL SENT ERROR', err)
                   return res.json({
-                    message: err.message
+                    message: err.message,
                   });
                 });
             }
@@ -259,44 +262,44 @@ export function forgotPasswordController(req, res){
       }
     );
   }
-};
+}
 
-export function resetPasswordController(req, res){
+export function resetPasswordController(req, res) {
   const { resetPasswordLink, newPassword } = req.body;
 
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    const firstError = errors.array().map(error => error.msg)[0];
+    const firstError = errors.array().map((error) => error.msg)[0];
     return res.status(422).json({
-      errors: firstError
+      errors: firstError,
     });
   } else {
     if (resetPasswordLink) {
-      jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, function(
+      jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, function (
         err,
         decoded
       ) {
         if (err) {
           return res.status(400).json({
-            error: 'Expired link. Try again'
+            error: "Expired link. Try again",
           });
         }
 
         User.findOne(
           {
-            resetPasswordLink
+            resetPasswordLink,
           },
           (err, user) => {
             if (err || !user) {
               return res.status(400).json({
-                error: 'Something went wrong. Try later'
+                error: "Something went wrong. Try later",
               });
             }
 
             const updatedFields = {
               password: newPassword,
-              resetPasswordLink: ''
+              resetPasswordLink: "",
             };
 
             user = _.extend(user, updatedFields);
@@ -304,11 +307,11 @@ export function resetPasswordController(req, res){
             user.save((err, result) => {
               if (err) {
                 return res.status(400).json({
-                  error: 'Error resetting user password'
+                  error: "Error resetting user password",
                 });
               }
               res.json({
-                message: `Great! Now you can login with your new password`
+                message: `Great! Now you can login with your new password`,
               });
             });
           }
@@ -316,6 +319,4 @@ export function resetPasswordController(req, res){
       });
     }
   }
-};
-
-
+}
