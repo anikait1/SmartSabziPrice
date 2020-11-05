@@ -11,9 +11,12 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import EditLocationOutlinedIcon from "@material-ui/icons/EditLocationOutlined";
+import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 
 const Details = () => {
   const { id } = useParams();
@@ -49,28 +52,29 @@ const Details = () => {
   } else {
     return (
       <Container>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="baseline"
-          marginBottom={4}
-        >
-          <Box display="flex" alignItems="center">
-            <Typography variant="h5" component="h1" style={{ marginRight: 8 }}>
-              Sector 24, Chandigarh
-            </Typography>
-            <EditLocationOutlinedIcon fontSize="large" />
-          </Box>
-          <ButtonGroup
-            variant="outlined"
-            color="primary"
-            aria-label="contained primary button group"
-          >
-            <Button startIcon={<CreateOutlinedIcon />}>New</Button>
-            <Button startIcon={<InfoOutlinedIcon />}>Info</Button>
-          </ButtonGroup>
-        </Box>
-        <PricePostLayout itemId={id} />
+        <Grid container spacing-xs={2} spacing={4} alignItems="center">
+          <Grid item xs={12} sm={6}>
+          <form noValidate autoComplete="off">
+                <TextField
+                  id="standard-basic"
+                  label="Location"
+                />
+              </form>
+          </Grid>
+          <Grid item={true} xs={12} sm={6} style={{"textAlign": "right"}}>
+            <ButtonGroup
+              variant="outlined"
+              color="primary"
+              aria-label="contained primary button group"
+            >
+              <Button fullWidth={true} startIcon={<CreateOutlinedIcon />}>New</Button>
+              <Button fullWidth={true} startIcon={<InfoOutlinedIcon />}>Info</Button>
+            </ButtonGroup>
+          </Grid>
+          <Grid item xs={12}>
+          <PricePostLayout itemId={id} />
+          </Grid>
+        </Grid>
       </Container>
     );
   }
