@@ -8,6 +8,7 @@ import { Grid } from "@material-ui/core";
 import { Container } from "@material-ui/core";
 import ItemInfo from "./ItemInfo";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -18,11 +19,30 @@ import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
+const useStyles = makeStyles((theme) => ({
+  buttonAlign: {
+    textAlign: "right",
+  
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center"
+    }
+  },
+
+  inputAlign: {
+    textAlign: "left",
+    
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center"
+    }
+  }
+}));
+
 const Details = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const classes = useStyles();
 
   useEffect(() => {
     const fetchItemDetail = async () => {
@@ -53,26 +73,27 @@ const Details = () => {
     return (
       <Container>
         <Grid container spacing-xs={2} spacing={4} alignItems="center">
-          <Grid item xs={12} sm={6}>
-          <form noValidate autoComplete="off">
-                <TextField
-                  id="standard-basic"
-                  label="Location"
-                />
-              </form>
+          <Grid item xs={12} sm={6} className={classes.inputAlign}>
+            <form noValidate autoComplete="off">
+              <TextField id="standard-basic" label="Location" />
+            </form>
           </Grid>
-          <Grid item={true} xs={12} sm={6} style={{"textAlign": "right"}}>
+          <Grid item={true} xs={12} sm={6} className={classes.buttonAlign}>
             <ButtonGroup
               variant="outlined"
               color="primary"
               aria-label="contained primary button group"
             >
-              <Button fullWidth={true} startIcon={<CreateOutlinedIcon />}>New</Button>
-              <Button fullWidth={true} startIcon={<InfoOutlinedIcon />}>Info</Button>
+              <Button startIcon={<CreateOutlinedIcon />}>
+                New
+              </Button>
+              <Button startIcon={<InfoOutlinedIcon />}>
+                Info
+              </Button>
             </ButtonGroup>
           </Grid>
           <Grid item xs={12}>
-          <PricePostLayout itemId={id} />
+            <PricePostLayout itemId={id} />
           </Grid>
         </Grid>
       </Container>
