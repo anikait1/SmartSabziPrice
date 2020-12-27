@@ -1,36 +1,53 @@
 const PricePost = require("./pricePost.model");
 const User = require("../user/user.model");
 const Item = require("../item/item.model");
+const {
+  errorCodes,
+  createResponse,
+  responseStatus,
+} = require("../../utils/controllerResponse");
 
 // Get price-posts for specified item
 exports.getItemPricePosts = async (req, res) => {
-  // parse latitude, longitude and distance from query object
-  const latitude = parseFloat(req.query.latitude);
-  const longitude = parseFloat(req.query.longitude);
-  const distance = parseInt(req.query.distance) ?? 3000;
-
-  // validate query parameters
-  if (latitude === NaN || longitude === NaN || distance || NaN) {
-    res.status(400).json({ error: "Invalid query" });
-  }
-
   try {
-    const pricePosts = await PricePost.find({ itemID: req.params.id })
-      .where("position")
-      .near({
-        center: { type: "Point", coordinates: [longitude, latitude] },
-        maxDistance: distance,
-      })
-      .populate({ path: "userID", select: { firstName: 1, lastName: 1 } })
-      .exec();
+    // parse latitude, longitude and distance from query object
+    const latitude = parseFloat(req.query.latitude);
+    const longitude = parseFloat(req.query.longitude);
+    const distance = req.query.distance ?? 3000;
 
-    res.status(200).send(pricePosts);
+    // validate the query parameters
+    if (latitude === NaN || longitude === NaN || typeof distance !== number) {
+      const response = createResponse(
+        responseStatus.FAIL,
+        errorCodes.INVALID_PARAMETERS,
+        null
+      );
+      res.status(400).json(response);
+    } else {
+      const pricePosts = await PricePost.find({ itemID: req.params.id })
+        .where("position")
+        .near({
+          center: { type: "Point", coordinates: [longitude, latitude] },
+          maxDistance: distance,
+        })
+        .populate({ path: "userID", select: { firstName: 1, lastName: 1 } })
+        .exec();
+
+      const response = createResponse(responseStatus.SUCCESS, null, pricePosts);
+      res.status(200).send(response);
+    }
   } catch (err) {
-    // console.log(err);
-    res.status(500).send(err);
+    const response = createResponse(
+      responseStatus.FAIL,
+      errorCodes.SERVER_ERROR,
+      null
+    );
+
+    res.status(500).send(response);
   }
 };
 
+// TO-DO
 // Create a new price-post
 exports.createPricePost = async (req, res) => {
   try {
@@ -38,18 +55,35 @@ exports.createPricePost = async (req, res) => {
     const isItem = await Item.exists({ _id: req.params.id });
 
     // validate the user and item
-    if (isUser === false || isItem === false) {
-      res.status(404).json({ error: "Item or User not found" });
+    if (isUser === false) {
+      const response = createResponse(
+        responseStatus.FAIL,
+        errorCodes.USER_NOT_FOUND,
+        null
+      );
+      res.status(404).json(response);
+    } else if (isItem === false) {
+      const response = createResponse(
+        responseStatus.FAIL,
+        errorCodes.ITEM_NOT_FOUND,
+        null
+      );
+      res.status(404).json(response);
     } else {
       const pricePost = new PricePost({ ...req.body });
       pricePost.itemID = req.params.id;
 
       await pricePost.save();
-      res.status(201).json(pricePost);
+      const response = createResponse(responseStatus.SUCCESS, null, pricePost);
+      res.status(201).json(response);
     }
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: "Bad Request" });
+    const response = createResponse(
+      responseStatus.FAIL,
+      errorCodes.SERVER_ERROR,
+      null
+    );
+    res.status(500).json(response);
   }
 };
 
@@ -62,10 +96,23 @@ exports.addLike = async (req, res) => {
     const pricePost = await PricePost.findById(pricePostID);
     const user = await User.findById(userID);
 
+    // validate price-post and user
     if (pricePost === null) {
-      res.status(404).send("Price Post Not Found");
+      const response = createResponse(
+        responseStatus.FAIL,
+        errorCodes.PRICE_POST_NOT_FOUND,
+        null
+      );
+
+      res.status(404).json(response);
     } else if (user === null) {
-      res.status(404).send("User Not Found");
+      const response = createResponse(
+        responseStatus.FAIL,
+        errorCodes.USER_NOT_FOUND,
+        null
+      );
+
+      res.status(404).json(response);
     } else {
       pricePost.likes.push(userID);
       user.likedPosts.push(pricePostID);
@@ -73,14 +120,21 @@ exports.addLike = async (req, res) => {
       await pricePost.save();
       await user.save();
 
-      res.status(201).json(pricePost);
+      const response = createResponse(responseStatus.SUCCESS, null, pricePost);
+      res.status(201).json(response);
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
+    const response = createResponse(
+      responseStatus.FAIL,
+      errorCodes.SERVER_ERROR,
+      null
+    );
+
+    res.status(500).json(response);
   }
 };
 
+// Remove a like from an existing price-post
 exports.removeLike = async (req, res) => {
   try {
     const pricePostID = req.params.pricePostID;
@@ -89,10 +143,23 @@ exports.removeLike = async (req, res) => {
     const pricePost = await PricePost.findById(pricePostID);
     const user = await User.findById(userID);
 
+    // validate price-post and user
     if (pricePost === null) {
-      res.status(404).send("Price Post Not Found");
+      const response = createResponse(
+        responseStatus.FAIL,
+        errorCodes.PRICE_POST_NOT_FOUND,
+        null
+      );
+
+      res.status(404).json(response);
     } else if (pricePost === null) {
-      res.status(404).send("User Not Found");
+      const response = createResponse(
+        responseStatus.FAIL,
+        errorCodes.USER_NOT_FOUND,
+        null
+      );
+
+      res.status(404).json(response);
     } else {
       pricePost.likes.pull(userID);
       user.likedPosts.pull(pricePostID);
@@ -100,9 +167,16 @@ exports.removeLike = async (req, res) => {
       await pricePost.save();
       await user.save();
 
-      res.status(201).json({ "price-post": pricePost, user: user });
+      const response = createResponse(responseStatus.SUCCESS, null, pricePost);
+      res.status(200).json(response);
     }
   } catch (err) {
-    res.send(err);
+    const response = createResponse(
+      responseStatus.FAIL,
+      errorCodes.SERVER_ERROR,
+      null
+    );
+
+    res.status(500).json(response);
   }
 };
