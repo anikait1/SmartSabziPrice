@@ -1,4 +1,9 @@
 const Item = require("./item.model");
+const {
+  errorCodes,
+  createResponse,
+  responseStatus,
+} = require("../../utils/controllerResponse");
 
 // Get fruits
 exports.getFruits = async (_req, res) => {
@@ -8,9 +13,16 @@ exports.getFruits = async (_req, res) => {
       .select({ name: 1, category: 1, "nutrition.calories": 1 })
       .exec();
 
-    res.status(200).json(fruits);
+    const response = createResponse(responseStatus.SUCCESS, null, fruits);
+    res.status(200).json(response);
   } catch (err) {
-    res.status(500).json(err);
+    const response = createResponse(
+      responseStatus.FAIL,
+      errorCodes.SERVER_ERROR,
+      null
+    );
+
+    res.status(500).json(response);
   }
 };
 
@@ -22,9 +34,16 @@ exports.getVegetables = async (_req, res) => {
       .select({ name: 1, category: 1, "nutrition.calories": 1 })
       .exec();
 
-    res.status(200).json(vegetables);
+    const response = createResponse(responseStatus.SUCCESS, null, vegetables);
+    res.status(200).json(response);
   } catch (err) {
-    res.status(500).json(err);
+    const response = createResponse(
+      responseStatus.FAIL,
+      errorCodes.SERVER_ERROR,
+      null
+    );
+
+    res.status(500).json(response);
   }
 };
 
@@ -34,9 +53,24 @@ exports.getItemById = async (req, res) => {
     const itemID = req.params.id;
     const item = await Item.findById(itemID).exec();
 
-    res.status(200).json(item);
+    if (item === null) {
+      const response = createResponse(
+        responseStatus.FAIL,
+        errorCodes.ITEM_NOT_FOUND,
+        null
+      );
+      res.status(404).json(response);
+    } else {
+      const response = createResponse(responseStatus.SUCCESS, null, item);
+      res.status(200).json(response);
+    }
   } catch (err) {
-    res.status(500).json(err);
+    const response = createResponse(
+      responseStatus.FAIL,
+      errorCodes.SERVER_ERROR,
+      null
+    );
+    res.status(500).json(response);
   }
 };
 
