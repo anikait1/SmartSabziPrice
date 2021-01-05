@@ -11,17 +11,18 @@ const {
 exports.getItemPricePosts = async (req, res) => {
   try {
     // parse latitude, longitude and distance from query object
-    const latitude = parseFloat(req.query.latitude);
-    const longitude = parseFloat(req.query.longitude);
-    const distance = req.query.distance ?? 3000;
+    const latitude = req.query.latitude;
+    const longitude = req.query.longitude;
+    const distance = req.query.distance ?? 3000000;
 
     // validate the query parameters
-    if (latitude === NaN || longitude === NaN || typeof distance !== number) {
+    if (latitude === NaN || longitude === NaN || typeof distance !== 'number') {
       const response = createResponse(
         responseStatus.FAIL,
         errorCodes.INVALID_PARAMETERS,
         null
       );
+      console.log( typeof latitude)
       res.status(400).json(response);
     } else {
       const pricePosts = await PricePost.find({ itemID: req.params.id })
@@ -44,6 +45,7 @@ exports.getItemPricePosts = async (req, res) => {
     );
 
     res.status(500).send(response);
+    console.log(err);
   }
 };
 
@@ -51,7 +53,7 @@ exports.getItemPricePosts = async (req, res) => {
 // Create a new price-post
 exports.createPricePost = async (req, res) => {
   try {
-    const isUser = await User.exists({ _id: req.body.userID });
+    const isUser = await User.exists({ _id: req.body.userID }); 
     const isItem = await Item.exists({ _id: req.params.id });
 
     // validate the user and item
