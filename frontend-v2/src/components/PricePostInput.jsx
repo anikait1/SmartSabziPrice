@@ -1,4 +1,4 @@
-import { React, useState, forwardRef } from "react";
+import { React, useState, useEffect, forwardRef } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -34,9 +34,16 @@ const PricePostInput = (props) => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
+  const [price, setPrice] = useState(null);
+  const [quantity, setQuantity] = useState(null);
+
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    console.log(price);
+  });
 
   const [currency, setCurrency] = useState("EUR");
 
@@ -76,6 +83,8 @@ const PricePostInput = (props) => {
                 size="small"
                 helperText="Enter price"
                 variant="outlined"
+                onChange={(e) => setPrice(e.target.value)}
+                value={price}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">&#x20B9;</InputAdornment>
