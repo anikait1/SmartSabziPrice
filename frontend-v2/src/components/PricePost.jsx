@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PricePost = () => {
+const PricePost = ({ bill, user, likes, location, time }) => {
   const classes = useStyles();
   const [clicked, setClicked] = useState(false);
 
@@ -42,7 +42,7 @@ const PricePost = () => {
     <Card>
       <CardHeader
         className={classes.cardHeader}
-        title="&#x20B9; 120"
+        title={`${String.fromCharCode(8377)} ${bill.price / bill.quantity}`}
         titleTypographyProps={{
           variant: "h5",
           component: "h3",
@@ -61,25 +61,25 @@ const PricePost = () => {
         <Box className={classes.infoBox}>
           <LocalMallOutlinedIcon fontSize="small" />
           <Typography variant="subtitle2" component="h6">
-            2 Kilogram
+            {`${bill.quantity} ${bill.quantityType}`}
           </Typography>
         </Box>
         <Box className={classes.infoBox}>
           <LocalOfferOutlinedIcon fontSize="small" />
           <Typography variant="subtitle2" component="h6">
-            &#x20B9; 240
+            {`${String.fromCharCode(8377)} ${bill.price}`}
           </Typography>
         </Box>
         <Box className={classes.infoBox}>
           <ExploreOutlinedIcon fontSize="small" />
           <Typography variant="subtitle2" component="h6">
-            Sector 37 Chandigarh
+            {location.title}
           </Typography>
         </Box>
         <Box className={classes.infoBox}>
           <EventOutlinedIcon fontSize="small" />
           <Typography variant="subtitle2" component="h6">
-            12-10-2020
+            {time.split("T")[0]}
           </Typography>
         </Box>
       </CardContent>
@@ -87,7 +87,7 @@ const PricePost = () => {
       <CardActions>
         <Avatar aria-label="username">R</Avatar>
         <Typography variant="body1" component="span">
-          Rohan
+          {`${user.firstName} ${user.lastName}`}
         </Typography>
         <IconButton
           aria-label="like the price"
@@ -105,7 +105,7 @@ const PricePost = () => {
           )}
         </IconButton>
         <Typography variant="subtitle2" component="h6">
-          15000
+          {likes.length}
         </Typography>
       </CardActions>
     </Card>
