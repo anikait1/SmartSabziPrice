@@ -264,8 +264,9 @@ export default function Header() {
                 onClick={() => {
                   history.push("/login");
                 }}
+                startIcon={<PersonAddIcon />}
               >
-               <PersonAddIcon /> Login
+                Login
               </Button>
             </div>
           )}
