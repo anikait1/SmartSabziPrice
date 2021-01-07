@@ -59,16 +59,16 @@ export default function Header() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="static">
+      <AppBar position="static" style={{ background: "#fdad5c" }}>
         <Toolbar>
           <Typography
-            variant="h6"
+            variant="title"
             className={classes.title}
             onClick={() => {
               history.push("/");
             }}
           >
-            FoxyBuyer
+            <img src="./bag.png" alt="bug" height={47} width={40} />
           </Typography>
           {isAuth() ? (
             <div>
