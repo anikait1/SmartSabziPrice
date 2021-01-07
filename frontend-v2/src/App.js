@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Main from "./components/Main";
-import ItemDetail from "./components/ItemDetail";
 import PricePostDetail from "./components/PricePostDetail"
 import Profile from "./components/Profile";
 import Register from "./components/AuthScreens/Register";
@@ -21,7 +20,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={Main} />
-        <Route path="/details/:id" component={ItemDetail} />
+        <Route path="/details/:id" component={PricePostDetail} />
         <Route path="/profile" component={Profile} />
         <Route path="/register" component={Register} />
         <Route path="/users/activate/:token" component={Activate} />
